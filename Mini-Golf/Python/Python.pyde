@@ -8,6 +8,7 @@ bg         = color(200)
 
 lvl = 1
 swung = False
+force = 0
 holeBallSize = 35
 ballSize = 25
 
@@ -31,6 +32,9 @@ def draw():
 def mouseReleased():
     global swung
     if not swung and int(vel.x) == 0 and int(vel.y) == 0:
+        global force
+        force = dist(mouseX,mouseY,pos.x,pos.y)
+        print force
         vel.x += (pos.x - mouseX) / 20
         vel.y += (pos.y - mouseY) / 20
         swung = True
