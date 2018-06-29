@@ -8,7 +8,6 @@ bg         = color(200)
 
 lvl = 1
 swung = False
-force = 0
 holeBallSize = 35
 ballSize = 25
 
@@ -32,9 +31,6 @@ def draw():
 def mouseReleased():
     global swung
     if not swung and int(vel.x) == 0 and int(vel.y) == 0:
-        global force
-        force = dist(mouseX,mouseY,pos.x,pos.y)
-        print force
         vel.x += (pos.x - mouseX) / 20
         vel.y += (pos.y - mouseY) / 20
         swung = True
@@ -85,6 +81,13 @@ def collisions():
 
 def drawClub():
     if mousePressed and not swung and int(vel.x) == 0 and int(vel.y) == 0:
+                
+        for curPoint in range(1,30):
+            target = PVector(pos.x+((pos.x-mouseX)/(5))*curPoint,pos.y+((pos.y-mouseY)/(5))*curPoint)
+            if get(int(target.x),int(target.y)) not in [obstacle,bg,ballColor]:
+                fill(0,80-4*curPoint)
+                ellipse(target.x,target.y,10,10)
+        
         strokeWeight(5)
         stroke(255)
         line(mouseX, mouseY, pos.x, pos.y)
