@@ -1,17 +1,23 @@
 
 def drawLevel(level,colors):
+    background(colors['bg'])
+    
     if level == 1:
         fill(colors['obstacle'])
         rect(390, 240, 220, 520)
-        fill(colors['lightGrass'])
+        fill(colors['heavyGrass'])
         rect(400, 250, 200, 500)
+        fill(colors['lightGrass'])
+        rect(425,250,150,500)
         fill(colors['hole'])
         ellipse(500, 300, 35, 35)
     elif level == 2:
         fill(colors['obstacle'])
         rect(240, 190, 520, 620)
-        fill(colors['lightGrass'])
+        fill(colors['heavyGrass'])
         rect(250, 200, 500, 600)
+        fill(colors['lightGrass'])
+        rect(250,225,500,550)
         fill(colors['obstacle'])
         rect(400, 450, 200, 100, 10)
         fill(colors['hole'])
@@ -25,4 +31,20 @@ def drawLevel(level,colors):
         rect(400, 350, 200, 300)
         fill(colors['hole'])
         ellipse(500, 300, 35, 35)
+    elif level == 4:
+        fill(colors['obstacle'])
+        rect(390,360,220,400)
+        rect(300,460,90,55)
+        fill(colors['lightGrass'])
+        rect(400,370,200,380)
+        rect(355,470,45,35)
+        fill(colors['heavyGrass'])
+        rect(310,470,45,35)
+        rect(400,370,200,100)
+        fill(colors['hole'])
+        ellipse(327,487,35,35)
+        fill(colors['obstacle'])
+        rect(500,575,100,50)
+        rect(400,540,20,25)
+        #rect(400,405,100,50)
         
