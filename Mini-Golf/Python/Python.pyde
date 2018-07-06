@@ -13,7 +13,9 @@ def setup():
     size(1000, 1000)
     noStroke()
     noCursor()
-    textAlign(LEFT)
+    data.fonts['bold']    = loadFont('URWGothic-Demi-120.vlw')
+    data.fonts['tooltip'] = loadFont('URWGothic-BookOblique-25.vlw')
+    data.fonts['scores']  = loadFont('URWGothic-Book-60.vlw')
 
 def draw():
     drawLevel(data.lvl, data.colors)
@@ -51,12 +53,13 @@ def drawTooltip():
     except: tooltip = data.lastTooltip
 
     textSize(25)
+    textFont(data.fonts['tooltip'],25)
     textAlign(CENTER)
     fill(255)
     
     rect(mouseX + offsetX, mouseY + offsetY, 200, 80, 15)
     fill(50)
-    text(tooltip, mouseX + 100 + offsetX, mouseY + 30 + offsetY)
+    text(tooltip, mouseX + 100 + offsetX, mouseY + 35 + offsetY)
 
 
 
@@ -81,6 +84,7 @@ def drawButtons():
     noStroke()
     
     textAlign(CENTER)
+    textFont(data.fonts['bold'])
         
     fill(data.colors['reset_text'])
     textSize(30)
@@ -89,10 +93,10 @@ def drawButtons():
     text("RESET", 905, 90)
     
     fill(data.colors['info_text'])
-    text("INFO\nTOOL", 905, 250)
+    text("INFO\nTOOL", 905, 255)
 
     fill(data.colors['club_text'])
-    text("CLUB\nTOOL", 905, 420)
+    text("CLUB\nTOOL", 905, 425)
 
 
 def drawCursor():
@@ -104,27 +108,30 @@ def drawCursor():
 
 def drawScores():
     textAlign(LEFT)
+    textFont(data.fonts['bold'])
     fill(data.colors['scoreBG'])
-    if data.attempts[data.lvl - 1] <  10: rect(20, 20, 280, 150, 30)
-    if data.attempts[data.lvl - 1] >= 10: rect(20, 20, 340, 150, 30)
+    if data.attempts[data.lvl - 1] <  10: rect(20, 20, 250, 150, 30)
+    if data.attempts[data.lvl - 1] >= 10: rect(20, 20, 310, 150, 30)
     fill(data.colors['score_text'])
     output = ''.join(['#', str(data.lvl), ':', str(data.attempts[data.lvl - 1])])
     textSize(120)
     text(output, 20, 140)
+    
+    textSize(60)
+    textFont(data.fonts['scores'])
 
     for i in range(data.lvl - 1):       # i counts backwards
         n = len(data.attempts) - 1 - i  # n counts forwards
         fill(255, 212, 36)
-        if data.attempts[i] <  10: rect(20, 90 + (100 * n), 135, 80, 20)
-        if data.attempts[i] >= 10: rect(20, 90 + (100 * n), 170, 80, 20)
+        if data.attempts[i] <  10: rect(20, 90 + (100 * n), 115, 80, 20)
+        if data.attempts[i] >= 10: rect(20, 90 + (100 * n), 150, 80, 20)
         fill(data.colors['score_text'])
-        textSize(60)
         output = ''.join(['#', str(i + 1), ':', str(data.attempts[i])])
         text(output, 20, 150 + (100 * n))
 
 
 def mouseReleased():
-    if not data.swung and not data.inClubBox and data.tool == 'club' and int(vel.x) == 0 and int(vel.y) == 0:
+    if not data.swung and not RT.ongoing and not data.inClubBox and data.tool == 'club' and int(vel.x) == 0 and int(vel.y) == 0:
         vel.x += (pos.x - mouseX) / 15
         vel.y += (pos.y - mouseY) / 15
         data.swung = True

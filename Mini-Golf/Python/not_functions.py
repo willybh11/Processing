@@ -7,6 +7,10 @@ lastTooltip = ''
 swung       = False
 inClubBox   = False
 
+fonts = {'bold'    :0,
+         'tooltip' :0,
+         'scores'  :0 }
+
 colors = {'obstacle'    : color(90, 90, 90),
           'lightGrass'  : color(36, 255, 96),
           'heavyGrass'  : color(86, 157, 93),
@@ -27,7 +31,7 @@ colors = {'obstacle'    : color(90, 90, 90),
           'scoreBG'     : color(255, 212, 36),
           'score_text'  : color(50)}
 
-tooltips = {'obstacle'  : 'An obstacle.\nYou will bounce.',
+tooltips = {'obstacle'  : 'An obstacle.\nImpassable.',
             'lightGrass': 'Light grass.\nLight friction.',
             'heavyGrass': 'Heavy grass.\nHeavy friction.',
             'ball'      : 'The ball. Hit it.\n(Use Club Tool)',
