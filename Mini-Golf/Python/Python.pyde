@@ -4,20 +4,22 @@ from levels import drawLevel
 import not_functions as data
 
 
+
 ET = endTransition()
 RT = resetTransition()
 vel = PVector(0, 0)
 pos = PVector(500, 700)
 
 def setup():
+    global sf
     size(1000, 1000)
     noStroke()
-    noCursor()
+    noCursor()        
     data.fonts['bold']    = loadFont('URWGothic-Demi-120.vlw')
     data.fonts['tooltip'] = loadFont('URWGothic-BookOblique-25.vlw')
     data.fonts['scores']  = loadFont('URWGothic-Book-60.vlw')
 
-def draw():
+def draw():   
     drawLevel(data.lvl, data.colors)
     move()
     collisions()
