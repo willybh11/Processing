@@ -3,15 +3,12 @@ from transitions import endTransition,resetTransition
 from levels import drawLevel
 import not_functions as data
 
-
-
 ET = endTransition()
 RT = resetTransition()
 vel = PVector(0, 0)
 pos = PVector(500, 700)
 
 def setup():
-    global sf
     size(1000, 1000)
     noStroke()
     noCursor()        

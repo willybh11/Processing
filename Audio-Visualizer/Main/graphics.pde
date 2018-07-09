@@ -19,6 +19,17 @@ public void drawStructure() {
   rect(50, 200, 50, 400);
 }
 
+public void drawTime(AudioPlayer player) {
+  fill(70);  
+  textAlign(CENTER);
+  textFont(font_100, 100);
+  text(nf(player.position()/1000/60, 1, 0)+":"+nf((player.position()/1000)%60, 2, 0), 825, 300);
+  textFont(font_80, 80);
+  text(nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 825, 400);
+  textFont(font_35, 35);
+  text("out of", 825, 335);
+}
+
 public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer player) {
   textAlign(LEFT);
   textFont(font_35, 35);
@@ -45,11 +56,16 @@ public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer
 }
 
 public void drawEQ(FFT fft, AudioPlayer player) {
-  stroke(255);
   fft.forward(player.mix);
 
   for (int x = 650; x < fft.specSize() + 650 - 162; x++) {
-    line(x, height, x, height - min(400, map(fft.getBand(x-650), 0, 200, 0, 400)*2));
+    float h = map(fft.getBand(x-650), 0, 200, 0, 400);
+    stroke(50);
+    line(x,height,x,height - min(400,h*5));
+    stroke(100);
+    line(x, height, x, height - min(400, h*4));
+    stroke(255);
+    line(x, height, x, height - min(400, h*2));
   }
 }
 
@@ -112,7 +128,7 @@ public void drawButtons(AudioPlayer player) {
 
   fill(6); //balance reset
   rect(540, 212, 73, 73, 20);
-  fill(0,253,0);
+  fill(0, 253, 0);
   text("RESET\nBLNCE", 577, 245);
   textAlign(LEFT);
 }
@@ -129,12 +145,6 @@ public void drawWaveform(AudioPlayer player) {
 }
 
 public void drawPosition_1(AudioPlayer player) {
-  fill(60);
-  textAlign(CENTER);
-  textFont(font_180,180);
-  float time = player.position()/1000;
-  text(nf(time,1 + 1*int(time > 10),2),500,165);
-  textAlign(LEFT);
   fill(30);
   float posx = map(player.position(), 0, player.length(), 0, 1000);
   rect(0, 0, posx, 200);
@@ -147,7 +157,7 @@ public void drawPosition_2(AudioPlayer player) {
 }
 
 public void drawBalance(AudioPlayer player) {
-  textFont(font_80,80);
+  textFont(font_80, 80);
   fill(60);
   textSize(80);
   textAlign(CENTER);

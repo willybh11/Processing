@@ -12,7 +12,7 @@ FFT[] ffts = new FFT[21];
 String[] filenames;
 String dragState;
 ArrayList<String> mp3s;
-PFont font_180;
+PFont font_100;
 PFont font_80;
 PFont font_35;
 PFont font_20;
@@ -38,8 +38,8 @@ void setup() {
     players[i] = minim[i].loadFile(mp3s.get(i)+".mp3");
     ffts[i] = new FFT(players[i].bufferSize(), players[i].sampleRate());
   }
-  
-  font_180= loadFont("Montserrat-Regular-180.vlw");
+
+  font_100= loadFont("Montserrat-Regular-100.vlw");
   font_80 = loadFont("Montserrat-Regular-80.vlw");
   font_35 = loadFont("Montserrat-Regular-35.vlw");
   font_20 = loadFont("Montserrat-Regular-20.vlw");
@@ -61,29 +61,35 @@ void draw() {
   drawLevel          (player);
   drawGain           (player);
   drawButtons        (player);
+  drawTime           (player);
   drawEQ        (fft, player);
   drawSongs(players, mp3s, player);
 }
 
 void mouseDragged() {
-  if (mouseInBalanceBox() && dragState == "none") {
-    dragState = "balance";
-  } 
+
   if (dragState == "balance") {
     float newBalance = map(min(200, max(1, mouseY)), 1, 200, -1, 1);
     players[current].setBalance(newBalance);
   }
-  if (mouseInGainBox() && dragState == "none") {
-    dragState = "gain";
-  } 
+
   if (dragState == "gain") {
     float newGain = map(min(580, max(201, mouseY)), 201, 580, 6, -30);
     players[current].setGain(newGain);
+  }
+
+  if (dragState == "none") {
+    if (mouseInBalanceBox()) { 
+      dragState = "balance";
+    } else if (mouseInGainBox()) { 
+      dragState = "gain";
+    }
   }
 }
 
 void mouseReleased() {
   dragState = "none";
+  println(dragState);
 }
 
 void mouseClicked() {
@@ -123,15 +129,15 @@ void mouseClicked() {
       }
     }
   } else if (get(mouseX, mouseY) == color(4)) {
-   if (!players[current].isMuted()) {
-    players[current].mute(); 
-   } else {
-    players[current].unmute();
-   }
-  } else if (get(mouseX,mouseY) == color(5) || get(mouseX,mouseY) == color(0,254,0)) {
-   players[current].setGain(0); 
-  } else if (get(mouseX,mouseY) == color(6) || get(mouseX,mouseY) == color(0,253,0)) {
-   players[current].setBalance(0); 
+    if (!players[current].isMuted()) {
+      players[current].mute();
+    } else {
+      players[current].unmute();
+    }
+  } else if (get(mouseX, mouseY) == color(5) || get(mouseX, mouseY) == color(0, 254, 0)) {
+    players[current].setGain(0);
+  } else if (get(mouseX, mouseY) == color(6) || get(mouseX, mouseY) == color(0, 253, 0)) {
+    players[current].setBalance(0);
   }
 }
 
