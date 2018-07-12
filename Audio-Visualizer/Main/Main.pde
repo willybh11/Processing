@@ -2,6 +2,15 @@
 //balance: scale from -1 to 1
 //level:   scale from  0 to 1
 
+//bass: 10-100hz
+//mid bass: 100-300hz
+//low mid: 300-600hz
+//midrange: 600hz-1.2kHz
+//high mid: 1.2-2.4khz
+//low treble: 2.4-4.8khz
+//mid treble: 4.8-9.6khz
+//high treble: 9.6-20khz
+
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import java.io.File;
@@ -32,6 +41,8 @@ void setup() {
       mp3s.add(split(filenames[i], ".mp3")[0]);
     }
   }
+  
+  java.util.Collections.sort(mp3s);
 
   for (int i = 0; i < mp3s.size(); i++) {
     minim[i] = new Minim(this);
@@ -50,6 +61,7 @@ void setup() {
 
 void draw() {
   background(0);
+  
   AudioPlayer player = players[current];
   FFT fft = ffts[current];
 
@@ -61,8 +73,8 @@ void draw() {
   drawLevel          (player);
   drawGain           (player);
   drawButtons        (player);
-  drawTime           (player);
   drawEQ        (fft, player);
+  drawTime           (player);
   drawSongs(players, mp3s, player);
 }
 
@@ -89,7 +101,6 @@ void mouseDragged() {
 
 void mouseReleased() {
   dragState = "none";
-  println(dragState);
 }
 
 void mouseClicked() {

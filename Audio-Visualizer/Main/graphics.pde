@@ -57,11 +57,35 @@ public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer
 
 public void drawEQ(FFT fft, AudioPlayer player) {
   fft.forward(player.mix);
+  float avgBass        = getHeight(fft, 10, 100);
+  float avgBass_mid    = getHeight(fft, 100, 300);
+  float avgMid_low     = getHeight(fft, 300, 600);
+  float avgMidrange    = getHeight(fft, 600, 1200);
+  float avgMid_high    = getHeight(fft, 1200, 2400);
+  float avgTreble_low  = getHeight(fft, 2400, 4800);
+  float avgTreble_mid  = getHeight(fft, 4800, 9600);
+  float avgTreble_high = getHeight(fft, 9600, 20000);
+  float w = 350/8.0;
+  fill(100,255,100);
+  noStroke();
+  rect(650+w*0, avgBass, w, 600-avgBass       );
+  rect(650+w*1, avgBass_mid, w, 600-avgBass_mid   );
+  rect(650+w*2, avgMid_low, w, 600-avgMid_low    );
+  rect(650+w*3, avgMidrange, w, 600-avgMidrange   );
+  rect(650+w*4, avgMid_high, w, 600-avgMid_high   );
+  rect(650+w*5, avgTreble_low, w, 600-avgTreble_low );
+  rect(650+w*6, avgTreble_mid, w, 600- avgTreble_mid );
+  rect(650+w*7, avgTreble_high, w, 600-avgTreble_high);
+  stroke(0, 255, 0);
+}
+
+public void drawEQ_old(FFT fft, AudioPlayer player) {
+  fft.forward(player.mix);
 
   for (int x = 650; x < fft.specSize() + 650 - 162; x++) {
     float h = map(fft.getBand(x-650), 0, 200, 0, 400);
     stroke(50);
-    line(x,height,x,height - min(400,h*5));
+    line(x, height, x, height - min(400, h*5));
     stroke(100);
     line(x, height, x, height - min(400, h*4));
     stroke(255);
