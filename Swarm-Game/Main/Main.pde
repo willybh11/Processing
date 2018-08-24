@@ -22,7 +22,6 @@ int colors[] = {
   color(74, 169, 245), color(75, 158, 224), color(56, 118, 167), color(47, 100, 142), color(37, 79, 113), color(31, 68, 98), color(27, 58, 82), color(21, 45, 64), color(16, 34, 49), color(0)
 };
 
-
 void setup() {
   size(700, 700);
   noStroke();
@@ -33,23 +32,22 @@ void setup() {
   HealthBlocks.initialize();
 }
 
+void keyPressed() {
+  if (key == 'r')
+    gameStatus = "resetting";
+}
+
 void draw() {
 
-  if (keyPressed) {
-    if (key == 'r' || key == 'R') {
-      gameStatus = "resetting";
-    }
-  }
-
-  if (gameStatus == "resetting") {
+  switch(gameStatus) {
+  case "resetting":
     textBox("Restarting...");
     if (winBox.x >= 720) {
       reset();
     }
-  }
+    break;
 
-  if (gameStatus == "ongoing") {
-
+  case "ongoing":
     drawBG();
     updateEnemies();
 
@@ -58,9 +56,8 @@ void draw() {
     }
 
     p1.update();
-  }
 
-  if (gameStatus != "resetting") {
+  default:
     lossCheck();
     winCheck();
   }

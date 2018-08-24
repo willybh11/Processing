@@ -15,33 +15,35 @@ import ddf.minim.*;
 import ddf.minim.analysis.*;
 import java.io.File;
 
-Minim[] minim = new Minim[21];
-AudioPlayer[] players = new AudioPlayer[21];
-FFT[] ffts = new FFT[21];
-String[] filenames;
+Minim[] minim = new Minim[14];
+AudioPlayer[] players = new AudioPlayer[14];
+FFT[] ffts = new FFT[14];
 String dragState;
 ArrayList<String> mp3s;
 PFont font_100;
-PFont font_80;
 PFont font_35;
-PFont font_20;
-PFont font_18;
 PFont font_15;
 int current;
+final static int PLAYPAUSE   = 10101;
+final static int REWIND      = 20202;
+final static int FASTFORWARD = 30303;
+final static int MUTE        = 40404;
+final static int BALANCE     = 50505;
+final static int GAIN        = 60606;
 
 
 void setup() {
   size(1100, 600, P3D);
   current = 0;  
-  filenames = new File(dataPath("")).list();
   mp3s = new ArrayList<String>();
+  dragState = "none";
 
-  for (int i = 0; i < filenames.length; i++) {
-    if (filenames[i].endsWith(".mp3")) {
-      mp3s.add(split(filenames[i], ".mp3")[0]);
+  for (String f : new File(dataPath("")).list()) {
+    if (f.endsWith(".mp3")) {
+      mp3s.add(split(f, ".mp3")[0]);
     }
   }
-  
+
   java.util.Collections.sort(mp3s);
 
   for (int i = 0; i < mp3s.size(); i++) {
@@ -51,49 +53,46 @@ void setup() {
   }
 
   font_100= loadFont("Montserrat-Regular-100.vlw");
-  font_80 = loadFont("Montserrat-Regular-80.vlw");
   font_35 = loadFont("Montserrat-Regular-35.vlw");
-  font_20 = loadFont("Montserrat-Regular-20.vlw");
-  font_18 = loadFont("Montserrat-Regular-18.vlw");
   font_15 = loadFont("Montserrat-Regular-15.vlw");
   textFont(font_15, 15);
 }
 
 void draw() {
+
+  println(hex(color(0, 254, 0), 6), int(hex(color(0, 254, 0))));
+
   background(0);
-  
+
   AudioPlayer player = players[current];
   FFT fft = ffts[current];
 
   drawStructure();
-  drawPosition_1     (player);
-  drawWaveform       (player);
-  drawPosition_2     (player);
-  drawBalance        (player);
-  drawLevel          (player);
-  drawGain           (player);
-  drawButtons        (player);
-  drawEQ        (fft, player);
-  drawTime           (player);
+  drawPosition_1          (player);
+  drawWaveform            (player);
+  drawPosition_2          (player);
+  drawBalance             (player);
+  drawLevel               (player);
+  drawGain                (player);
+  drawButtons             (player);
+  drawEQ             (fft, player);
+  drawTime                (player);
   drawSongs(players, mp3s, player);
 }
 
 void mouseDragged() {
 
-  if (dragState == "balance") {
-    float newBalance = map(min(200, max(1, mouseY)), 1, 200, -1, 1);
-    players[current].setBalance(newBalance);
-  }
-
-  if (dragState == "gain") {
-    float newGain = map(min(580, max(201, mouseY)), 201, 580, 6, -30);
-    players[current].setGain(newGain);
-  }
-
-  if (dragState == "none") {
-    if (mouseInBalanceBox()) { 
+  switch (dragState) {
+  case "balance": 
+    players[current].setBalance(map(min(200, max(1, mouseY)), 1, 200, -1, 1));
+    break;
+  case "gain": 
+    players[current].setGain(map(min(580, max(201, mouseY)), 201, 580, 6, -30)); 
+    break;
+  case "none":
+    if (mouseInBalanceBox()) {
       dragState = "balance";
-    } else if (mouseInGainBox()) { 
+    } else if (mouseInGainBox()) {
       dragState = "gain";
     }
   }
@@ -104,28 +103,27 @@ void mouseReleased() {
 }
 
 void mouseClicked() {
-  if (get(mouseX, mouseY) == color(1)) {
+
+  switch (int(hex(get(mouseX, mouseY), 6))) {
+  case PLAYPAUSE: 
     if (players[current].isPlaying()) {
       players[current].pause();
     } else {
       players[current].play();
     }
-  } else if (get(mouseX, mouseY) == color(2)) {
-
-    if (players[current].position() == 0) {
+    break;
+  case REWIND: 
+    if (players[current].position() != 0) {
       players[current].rewind();
       players[current].pause();
-      if (current == 0) { 
-        current = mp3s.size()-1;
-      } else {
-        current--;
-        players[current].play();
-      }
+    } else if (current == 0) {
+      current = mp3s.size()-1;
     } else {
-      players[current].rewind();
-      players[current].pause();
+      current--;
+      players[current].play();
     }
-  } else if (get(mouseX, mouseY) == color(3)) {
+    break;
+  case FASTFORWARD: 
     for (int i = 0; i < mp3s.size(); i++) {
       if (i == current) {
         players[current].rewind();
@@ -139,16 +137,20 @@ void mouseClicked() {
         }
       }
     }
-  } else if (get(mouseX, mouseY) == color(4)) {
+    break;
+  case MUTE: 
     if (!players[current].isMuted()) {
       players[current].mute();
     } else {
       players[current].unmute();
     }
-  } else if (get(mouseX, mouseY) == color(5) || get(mouseX, mouseY) == color(0, 254, 0)) {
-    players[current].setGain(0);
-  } else if (get(mouseX, mouseY) == color(6) || get(mouseX, mouseY) == color(0, 253, 0)) {
-    players[current].setBalance(0);
+    break;
+  default: 
+    if (get(mouseX, mouseY) == color(6) || get(mouseX, mouseY) == color(0, 254, 0)) {
+      players[current].setGain(0);
+    } else if (get(mouseX, mouseY) == color(5) || get(mouseX, mouseY) == color(0, 253, 0)) {
+      players[current].setBalance(0);
+    }
   }
 }
 

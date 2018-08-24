@@ -24,7 +24,7 @@ public void drawTime(AudioPlayer player) {
   textAlign(CENTER);
   textFont(font_100, 100);
   text(nf(player.position()/1000/60, 1, 0)+":"+nf((player.position()/1000)%60, 2, 0), 825, 300);
-  textFont(font_80, 80);
+  textSize(80);
   text(nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 825, 400);
   textFont(font_35, 35);
   text("out of", 825, 335);
@@ -33,10 +33,8 @@ public void drawTime(AudioPlayer player) {
 public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer player) {
   textAlign(LEFT);
   textFont(font_35, 35);
-  textSize(35);
   fill(0, 255, 0);
-  text("Available Songs ("+mp3s.size()+"/21):", 120, 350);
-  textFont(font_20, 20);
+  text("Available Songs ("+mp3s.size()+"/14):", 120, 350);
   textSize(20);
 
   for (int i = 0; i < mp3s.size(); i++) {
@@ -57,40 +55,26 @@ public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer
 
 public void drawEQ(FFT fft, AudioPlayer player) {
   fft.forward(player.mix);
-  float avgBass        = getHeight(fft, 10, 100);
-  float avgBass_mid    = getHeight(fft, 100, 300);
-  float avgMid_low     = getHeight(fft, 300, 600);
-  float avgMidrange    = getHeight(fft, 600, 1200);
-  float avgMid_high    = getHeight(fft, 1200, 2400);
-  float avgTreble_low  = getHeight(fft, 2400, 4800);
-  float avgTreble_mid  = getHeight(fft, 4800, 9600);
-  float avgTreble_high = getHeight(fft, 9600, 20000);
+  float Bass        = getHeight(fft, 10, 100);
+  float Bass_mid    = getHeight(fft, 100, 300);
+  float Mid_low     = getHeight(fft, 300, 600);
+  float Midrange    = getHeight(fft, 600, 1200);
+  float Mid_high    = getHeight(fft, 1200, 2400);
+  float Treble_low  = getHeight(fft, 2400, 4800);
+  float Treble_mid  = getHeight(fft, 4800, 9600);
+  float Treble_high = getHeight(fft, 9600, 20000);
   float w = 350/8.0;
-  fill(100,255,100);
+  fill(100, 255, 100);
   noStroke();
-  rect(650+w*0, avgBass, w, 600-avgBass       );
-  rect(650+w*1, avgBass_mid, w, 600-avgBass_mid   );
-  rect(650+w*2, avgMid_low, w, 600-avgMid_low    );
-  rect(650+w*3, avgMidrange, w, 600-avgMidrange   );
-  rect(650+w*4, avgMid_high, w, 600-avgMid_high   );
-  rect(650+w*5, avgTreble_low, w, 600-avgTreble_low );
-  rect(650+w*6, avgTreble_mid, w, 600- avgTreble_mid );
-  rect(650+w*7, avgTreble_high, w, 600-avgTreble_high);
+  rect(650+w*0, Bass,        w, 600-Bass);
+  rect(650+w*1, Bass_mid,    w, 600-Bass_mid);
+  rect(650+w*2, Mid_low,     w, 600-Mid_low);
+  rect(650+w*3, Midrange,    w, 600-Midrange);
+  rect(650+w*4, Mid_high,    w, 600-Mid_high);
+  rect(650+w*5, Treble_low,  w, 600-Treble_low);
+  rect(650+w*6, Treble_mid,  w, 600-Treble_mid );
+  rect(650+w*7, Treble_high, w, 600-Treble_high);
   stroke(0, 255, 0);
-}
-
-public void drawEQ_old(FFT fft, AudioPlayer player) {
-  fft.forward(player.mix);
-
-  for (int x = 650; x < fft.specSize() + 650 - 162; x++) {
-    float h = map(fft.getBand(x-650), 0, 200, 0, 400);
-    stroke(50);
-    line(x, height, x, height - min(400, h*5));
-    stroke(100);
-    line(x, height, x, height - min(400, h*4));
-    stroke(255);
-    line(x, height, x, height - min(400, h*2));
-  }
 }
 
 public void drawButtons(AudioPlayer player) {
@@ -142,7 +126,7 @@ public void drawButtons(AudioPlayer player) {
     line(380, 270, 395, 285);
   }
 
-  textFont(font_18);  
+  textFont(font_35, 18);  
   textAlign(CENTER);
 
   fill(5); //gain reset
@@ -161,8 +145,8 @@ public void drawWaveform(AudioPlayer player) {
   stroke(255);
   for (int i = 0; i < player.bufferSize() - 1; i++)
   {
-    float x1 = map( i, 0, player.bufferSize(), 0, 1000 );
-    float x2 = map( i+1, 0, player.bufferSize(), 0, 1000 );
+    float x1 = map( i, 0, player.bufferSize(), 0, 1000 ); //curent pos in drawing
+    float x2 = map( i+1, 0, player.bufferSize(), 0, 1000 ); //one pixel to the right
     line( x1, 50 + player.left.get(i)*50, x2, 50 + player.left.get(i+1)*50 );
     line( x1, 150 + player.right.get(i)*50, x2, 150 + player.right.get(i+1)*50 );
   }
@@ -181,9 +165,8 @@ public void drawPosition_2(AudioPlayer player) {
 }
 
 public void drawBalance(AudioPlayer player) {
-  textFont(font_80, 80);
-  fill(60);
-  textSize(80);
+  textFont(font_100, 80);
+  fill(60);  
   textAlign(CENTER);
   text("L", 1050, 75);
   text("R", 1050, 185);
@@ -193,7 +176,7 @@ public void drawBalance(AudioPlayer player) {
   fill(0, 0);
   rect(1000, balance, 100, 20);
   fill(0, 255, 0);
-  textSize(15);
+  textFont(font_15, 15);
   text(nf(player.getBalance(), 1, 2), 1050, balance+15);
 }
 
@@ -244,7 +227,7 @@ public void drawLevel(AudioPlayer player) {
 
 public void drawGain(AudioPlayer player) {
   fill(80);
-  textSize(30);
+  textFont(font_35, 30);
   text("+ 6db", 1050, 230);
   text("-30db", 1050, 585);
 
@@ -255,6 +238,6 @@ public void drawGain(AudioPlayer player) {
   float posy = map(player.getGain(), 6, -30, 201, 580);
   rect(1000, posy, 100, 20);
   fill(0, 255, 0);
-  textSize(15);
+  textFont(font_15, 15);
   text(nf(player.getGain(), 1 + 1*int(player.getGain() >= 10), 1)+" db", 1050, posy+15);
 }
