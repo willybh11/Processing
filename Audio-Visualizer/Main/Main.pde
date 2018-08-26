@@ -18,6 +18,8 @@ import java.io.File;
 Minim[] minim = new Minim[14];
 AudioPlayer[] players = new AudioPlayer[14];
 FFT[] ffts = new FFT[14];
+import processing.serial.*;
+Serial myPort;
 String dragState;
 ArrayList<String> mp3s;
 PFont font_100;
@@ -36,6 +38,7 @@ void setup() {
   size(1100, 600, P3D);
   current = 0;  
   mp3s = new ArrayList<String>();
+  myPort = new Serial(this,Serial.list()[0],9600);
   dragState = "none";
 
   for (String f : new File(dataPath("")).list()) {
@@ -60,7 +63,7 @@ void setup() {
 
 void draw() {
 
-  println(hex(color(0, 254, 0), 6), int(hex(color(0, 254, 0))));
+  //println(hex(color(0, 254, 0), 6), int(hex(color(0, 254, 0))));
 
   background(0);
 
@@ -75,7 +78,7 @@ void draw() {
   drawLevel               (player);
   drawGain                (player);
   drawButtons             (player);
-  drawEQ             (fft, player);
+  drawEQ             (myPort, fft, player);
   drawTime                (player);
   drawSongs(players, mp3s, player);
 }

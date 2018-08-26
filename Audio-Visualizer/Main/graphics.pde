@@ -53,28 +53,51 @@ public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer
   }
 }
 
-public void drawEQ(FFT fft, AudioPlayer player) {
+public void drawEQ(Serial myPort, FFT fft, AudioPlayer player) {
   fft.forward(player.mix);
-  float Bass        = getHeight(fft, 10, 100);
-  float Bass_mid    = getHeight(fft, 100, 300);
-  float Mid_low     = getHeight(fft, 300, 600);
-  float Midrange    = getHeight(fft, 600, 1200);
-  float Mid_high    = getHeight(fft, 1200, 2400);
-  float Treble_low  = getHeight(fft, 2400, 4800);
-  float Treble_mid  = getHeight(fft, 4800, 9600);
-  float Treble_high = getHeight(fft, 9600, 20000);
+  int Bass        = getHeight(fft, 10, 100);
+  int Bass_mid    = getHeight(fft, 100, 300);
+  int Mid_low     = getHeight(fft, 300, 600);
+  int Midrange    = getHeight(fft, 600, 1200);
+  int Mid_high    = getHeight(fft, 1200, 2400);
+  int Treble_low  = getHeight(fft, 2400, 4800);
+  int Treble_mid  = getHeight(fft, 4800, 9600);
+  int Treble_high = getHeight(fft, 9600, 20000);
   float w = 350/8.0;
   fill(100, 255, 100);
   noStroke();
-  rect(650+w*0, Bass,        w, 600-Bass);
-  rect(650+w*1, Bass_mid,    w, 600-Bass_mid);
-  rect(650+w*2, Mid_low,     w, 600-Mid_low);
-  rect(650+w*3, Midrange,    w, 600-Midrange);
-  rect(650+w*4, Mid_high,    w, 600-Mid_high);
-  rect(650+w*5, Treble_low,  w, 600-Treble_low);
-  rect(650+w*6, Treble_mid,  w, 600-Treble_mid );
+  rect(650+w*0, Bass, w, 600-Bass);
+  rect(650+w*1, Bass_mid, w, 600-Bass_mid);
+  rect(650+w*2, Mid_low, w, 600-Mid_low);
+  rect(650+w*3, Midrange, w, 600-Midrange);
+  rect(650+w*4, Mid_high, w, 600-Mid_high);
+  rect(650+w*5, Treble_low, w, 600-Treble_low);
+  rect(650+w*6, Treble_mid, w, 600-Treble_mid );
   rect(650+w*7, Treble_high, w, 600-Treble_high);
   stroke(0, 255, 0);
+
+  Bass        = int(map(Bass,600,200,0,8));
+  Bass_mid    = int(map(Bass_mid,600,200,0,8));
+  Mid_low     = int(map(Mid_low,600,200,0,8));
+  Midrange    = int(map(Midrange,600,200,0,8));
+  Mid_high    = int(map(Mid_high,600,200,0,8));
+  Treble_low  = int(map(Treble_low,600,200,0,8));
+  Treble_mid  = int(map(Treble_mid,600,200,0,8));
+  Treble_high = int(map(Treble_high,600,200,0,8));
+
+  //String line1 = ""+1*int(Bass>=1)+1*int(Bass_mid>=1)+1*int(Mid_low>=1)+1*int(Midrange>=1)+1*int(Mid_high>=1)+1*int(Treble_low>=1)+1*int(Treble_mid>=1)+1*int(Treble_high>=1);
+  //String line2 = ""+1*int(Bass>=2)+1*int(Bass_mid>=2)+1*int(Mid_low>=2)+1*int(Midrange>=2)+1*int(Mid_high>=2)+1*int(Treble_low>=2)+1*int(Treble_mid>=2)+1*int(Treble_high>=2);
+  //String line3 = ""+1*int(Bass>=3)+1*int(Bass_mid>=3)+1*int(Mid_low>=3)+1*int(Midrange>=3)+1*int(Mid_high>=3)+1*int(Treble_low>=3)+1*int(Treble_mid>=3)+1*int(Treble_high>=3);
+  //String line4 = ""+1*int(Bass>=4)+1*int(Bass_mid>=4)+1*int(Mid_low>=4)+1*int(Midrange>=4)+1*int(Mid_high>=4)+1*int(Treble_low>=4)+1*int(Treble_mid>=4)+1*int(Treble_high>=4);
+  //String line5 = ""+1*int(Bass>=5)+1*int(Bass_mid>=5)+1*int(Mid_low>=5)+1*int(Midrange>=5)+1*int(Mid_high>=5)+1*int(Treble_low>=5)+1*int(Treble_mid>=5)+1*int(Treble_high>=5);
+  //String line6 = ""+1*int(Bass>=6)+1*int(Bass_mid>=6)+1*int(Mid_low>=6)+1*int(Midrange>=6)+1*int(Mid_high>=6)+1*int(Treble_low>=6)+1*int(Treble_mid>=6)+1*int(Treble_high>=6);
+  //String line7 = ""+1*int(Bass>=7)+1*int(Bass_mid>=7)+1*int(Mid_low>=7)+1*int(Midrange>=7)+1*int(Mid_high>=7)+1*int(Treble_low>=7)+1*int(Treble_mid>=7)+1*int(Treble_high>=7);
+  //String line8 = ""+1*int(Bass>=8)+1*int(Bass_mid>=8)+1*int(Mid_low>=8)+1*int(Midrange>=8)+1*int(Mid_high>=8)+1*int(Treble_low>=8)+1*int(Treble_mid>=8)+1*int(Treble_high>=8);
+  
+  //myPort.write(line1+"|"+line2+"|"+line3+"|"+line4+"|"+line5+"|"+line6+"|"+line7+"|"+line8+"\n");
+  
+  myPort.write(""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
+  println     (""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
 }
 
 public void drawButtons(AudioPlayer player) {
