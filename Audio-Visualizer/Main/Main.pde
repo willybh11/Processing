@@ -33,12 +33,16 @@ final static int MUTE        = 40404;
 final static int BALANCE     = 50505;
 final static int GAIN        = 60606;
 
+boolean Arduino = true;
+
 
 void setup() {
   size(1100, 600, P3D);
   current = 0;  
   mp3s = new ArrayList<String>();
-  myPort = new Serial(this,Serial.list()[0],9600);
+  if (Arduino) {
+    myPort = new Serial(this, Serial.list()[0], 9600);
+  }
   dragState = "none";
 
   for (String f : new File(dataPath("")).list()) {

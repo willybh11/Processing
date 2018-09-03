@@ -76,28 +76,21 @@ public void drawEQ(Serial myPort, FFT fft, AudioPlayer player) {
   rect(650+w*7, Treble_high, w, 600-Treble_high);
   stroke(0, 255, 0);
 
-  Bass        = int(map(Bass,600,200,0,8));
-  Bass_mid    = int(map(Bass_mid,600,200,0,8));
-  Mid_low     = int(map(Mid_low,600,200,0,8));
-  Midrange    = int(map(Midrange,600,200,0,8));
-  Mid_high    = int(map(Mid_high,600,200,0,8));
-  Treble_low  = int(map(Treble_low,600,200,0,8));
-  Treble_mid  = int(map(Treble_mid,600,200,0,8));
-  Treble_high = int(map(Treble_high,600,200,0,8));
+  Bass        = int(map(Bass, 600, 200, 0, 8));
+  Bass_mid    = int(map(Bass_mid, 600, 200, 0, 8));
+  Mid_low     = int(map(Mid_low, 600, 200, 0, 8));
+  Midrange    = int(map(Midrange, 600, 200, 0, 8));
+  Mid_high    = int(map(Mid_high, 600, 200, 0, 8));
+  Treble_low  = int(map(Treble_low, 600, 200, 0, 8));
+  Treble_mid  = int(map(Treble_mid, 600, 200, 0, 8));
+  Treble_high = int(map(Treble_high, 600, 200, 0, 8));
 
-  //String line1 = ""+1*int(Bass>=1)+1*int(Bass_mid>=1)+1*int(Mid_low>=1)+1*int(Midrange>=1)+1*int(Mid_high>=1)+1*int(Treble_low>=1)+1*int(Treble_mid>=1)+1*int(Treble_high>=1);
-  //String line2 = ""+1*int(Bass>=2)+1*int(Bass_mid>=2)+1*int(Mid_low>=2)+1*int(Midrange>=2)+1*int(Mid_high>=2)+1*int(Treble_low>=2)+1*int(Treble_mid>=2)+1*int(Treble_high>=2);
-  //String line3 = ""+1*int(Bass>=3)+1*int(Bass_mid>=3)+1*int(Mid_low>=3)+1*int(Midrange>=3)+1*int(Mid_high>=3)+1*int(Treble_low>=3)+1*int(Treble_mid>=3)+1*int(Treble_high>=3);
-  //String line4 = ""+1*int(Bass>=4)+1*int(Bass_mid>=4)+1*int(Mid_low>=4)+1*int(Midrange>=4)+1*int(Mid_high>=4)+1*int(Treble_low>=4)+1*int(Treble_mid>=4)+1*int(Treble_high>=4);
-  //String line5 = ""+1*int(Bass>=5)+1*int(Bass_mid>=5)+1*int(Mid_low>=5)+1*int(Midrange>=5)+1*int(Mid_high>=5)+1*int(Treble_low>=5)+1*int(Treble_mid>=5)+1*int(Treble_high>=5);
-  //String line6 = ""+1*int(Bass>=6)+1*int(Bass_mid>=6)+1*int(Mid_low>=6)+1*int(Midrange>=6)+1*int(Mid_high>=6)+1*int(Treble_low>=6)+1*int(Treble_mid>=6)+1*int(Treble_high>=6);
-  //String line7 = ""+1*int(Bass>=7)+1*int(Bass_mid>=7)+1*int(Mid_low>=7)+1*int(Midrange>=7)+1*int(Mid_high>=7)+1*int(Treble_low>=7)+1*int(Treble_mid>=7)+1*int(Treble_high>=7);
-  //String line8 = ""+1*int(Bass>=8)+1*int(Bass_mid>=8)+1*int(Mid_low>=8)+1*int(Midrange>=8)+1*int(Mid_high>=8)+1*int(Treble_low>=8)+1*int(Treble_mid>=8)+1*int(Treble_high>=8);
-  
-  //myPort.write(line1+"|"+line2+"|"+line3+"|"+line4+"|"+line5+"|"+line6+"|"+line7+"|"+line8+"\n");
-  
-  myPort.write(""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
-  println     (""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
+  if (Arduino) {
+    myPort.write(""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
+    if (Bass+Bass_mid+Mid_low+Midrange+Mid_high+Treble_low+Treble_mid+Treble_high != 0) {
+      println     (""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
+    }
+  }
 }
 
 public void drawButtons(AudioPlayer player) {
