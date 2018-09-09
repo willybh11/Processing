@@ -12,10 +12,6 @@ public int getHeight(FFT fft, int min, int max) {
   for (float i = min; i < max; i++) {
     n += fft.getFreq(i);
   }
-  n = max(200,600-n/80);
+  n = max(200, 600-n/80);
   return(n);
-}
-
-public void sendFreq(Serial myPort, int freq) {
-  
 }

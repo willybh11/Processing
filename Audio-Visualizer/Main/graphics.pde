@@ -17,28 +17,30 @@ public void drawStructure() {
   fill(0, 0);
   rect(1, 200, 49, 400);
   rect(50, 200, 50, 400);
+  rect(1, 1, 1099, 599);
 }
 
-public void drawTime(AudioPlayer player) {
+public void drawTime() {
   fill(70);  
-  textAlign(CENTER);
-  textFont(font_100, 100);
-  text(nf(player.position()/1000/60, 1, 0)+":"+nf((player.position()/1000)%60, 2, 0), 825, 300);
-  textSize(80);
-  text(nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 825, 400);
-  textFont(font_35, 35);
-  text("out of", 825, 335);
+  textAlign(LEFT);
+  textSize(70);
+  text(nf(player.position()/1000/60, 1, 0)+":"+nf((player.position()/1000)%60), 655, 270);
+  text("| " + nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0),815,270);
+  //textSize(80);
+  //text(nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 825, 400);
+  //textSize(35);
+  //text("out of", 825, 335);
 }
 
-public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer player) {
+public void drawSongs() {
   textAlign(LEFT);
-  textFont(font_35, 35);
+  textSize(35);
   fill(0, 255, 0);
   text("Available Songs ("+mp3s.size()+"/14):", 120, 350);
   textSize(20);
 
   for (int i = 0; i < mp3s.size(); i++) {
-    if (player == players[i]) { 
+    if (i == songNum) { 
       fill(50, 150, 250);
     } else { 
       fill(0, 255, 0);
@@ -53,47 +55,33 @@ public void drawSongs(AudioPlayer[] players, ArrayList<String> mp3s, AudioPlayer
   }
 }
 
-public void drawEQ(Serial myPort, FFT fft, AudioPlayer player) {
+public void drawEQ() {
   fft.forward(player.mix);
-  int Bass        = getHeight(fft, 10, 100);
-  int Bass_mid    = getHeight(fft, 100, 300);
-  int Mid_low     = getHeight(fft, 300, 600);
-  int Midrange    = getHeight(fft, 600, 1200);
-  int Mid_high    = getHeight(fft, 1200, 2400);
-  int Treble_low  = getHeight(fft, 2400, 4800);
-  int Treble_mid  = getHeight(fft, 4800, 9600);
-  int Treble_high = getHeight(fft, 9600, 20000);
+
   float w = 350/8.0;
+  int h;
+  String output = "";
+  fill(50, 110, 40);
+  for (int i = 0; i < 8; i++) {
+    h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 600), 200);
+    output += str(int(map(h, 600, 200, -1, 8)));
+    rect(650+w*i, h, w, 600-h);
+  }
+
+  w = 350/16.0;
   fill(100, 255, 100);
   noStroke();
-  rect(650+w*0, Bass, w, 600-Bass);
-  rect(650+w*1, Bass_mid, w, 600-Bass_mid);
-  rect(650+w*2, Mid_low, w, 600-Mid_low);
-  rect(650+w*3, Midrange, w, 600-Midrange);
-  rect(650+w*4, Mid_high, w, 600-Mid_high);
-  rect(650+w*5, Treble_low, w, 600-Treble_low);
-  rect(650+w*6, Treble_mid, w, 600-Treble_mid );
-  rect(650+w*7, Treble_high, w, 600-Treble_high);
-  stroke(0, 255, 0);
+  for (int i = 0; i < 16; i++) {
+    h = getHeight(fft, smallNums[i], smallNums[i+1]);
+    rect(650+w*i, h, w, 600-h);
+  }
 
-  Bass        = int(map(Bass, 600, 200, 0, 8));
-  Bass_mid    = int(map(Bass_mid, 600, 200, 0, 8));
-  Mid_low     = int(map(Mid_low, 600, 200, 0, 8));
-  Midrange    = int(map(Midrange, 600, 200, 0, 8));
-  Mid_high    = int(map(Mid_high, 600, 200, 0, 8));
-  Treble_low  = int(map(Treble_low, 600, 200, 0, 8));
-  Treble_mid  = int(map(Treble_mid, 600, 200, 0, 8));
-  Treble_high = int(map(Treble_high, 600, 200, 0, 8));
-
-  if (Arduino) {
-    myPort.write(""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
-    if (Bass+Bass_mid+Mid_low+Midrange+Mid_high+Treble_low+Treble_mid+Treble_high != 0) {
-      println     (""+Bass+""+Bass_mid+""+Mid_low+""+Midrange+""+Mid_high+""+Treble_low+""+Treble_mid+""+Treble_high);
-    }
+  if (ARDUINO) {
+    myPort.write(output);
   }
 }
 
-public void drawButtons(AudioPlayer player) {
+public void drawButtons() {
   fill(1); //play/pause button
   noStroke();
   rect(175, 200, 75, 100);
@@ -142,7 +130,7 @@ public void drawButtons(AudioPlayer player) {
     line(380, 270, 395, 285);
   }
 
-  textFont(font_35, 18);  
+  textSize(18); 
   textAlign(CENTER);
 
   fill(5); //gain reset
@@ -157,7 +145,7 @@ public void drawButtons(AudioPlayer player) {
   textAlign(LEFT);
 }
 
-public void drawWaveform(AudioPlayer player) {
+public void drawWaveform() {
   stroke(255);
   for (int i = 0; i < player.bufferSize() - 1; i++)
   {
@@ -168,20 +156,8 @@ public void drawWaveform(AudioPlayer player) {
   }
 }
 
-public void drawPosition_1(AudioPlayer player) {
-  fill(30);
-  float posx = map(player.position(), 0, player.length(), 0, 1000);
-  rect(0, 0, posx, 200);
-}
-
-public void drawPosition_2(AudioPlayer player) {
-  float posx = map(player.position(), 0, player.length(), 0, 1000);
-  stroke(0, 255, 0);
-  line(posx, 0, posx, 200);
-}
-
-public void drawBalance(AudioPlayer player) {
-  textFont(font_100, 80);
+public void drawBalance() {
+  textSize(80);
   fill(60);  
   textAlign(CENTER);
   text("L", 1050, 75);
@@ -190,13 +166,14 @@ public void drawBalance(AudioPlayer player) {
   float balance = map(player.getBalance(), -1, 1, 1, 180);
 
   fill(0, 0);
+  stroke(0, 255, 0);
   rect(1000, balance, 100, 20);
   fill(0, 255, 0);
-  textFont(font_15, 15);
+  textSize(15);
   text(nf(player.getBalance(), 1, 2), 1050, balance+15);
 }
 
-public void drawLevel(AudioPlayer player) {
+public void drawLevel() {
 
 
   noStroke();
@@ -241,9 +218,9 @@ public void drawLevel(AudioPlayer player) {
   stroke(0, 255, 0);
 }
 
-public void drawGain(AudioPlayer player) {
+public void drawGain() {
   fill(80);
-  textFont(font_35, 30);
+  textSize(35);
   text("+ 6db", 1050, 230);
   text("-30db", 1050, 585);
 
@@ -254,6 +231,6 @@ public void drawGain(AudioPlayer player) {
   float posy = map(player.getGain(), 6, -30, 201, 580);
   rect(1000, posy, 100, 20);
   fill(0, 255, 0);
-  textFont(font_15, 15);
+  textSize(15);
   text(nf(player.getGain(), 1 + 1*int(player.getGain() >= 10), 1)+" db", 1050, posy+15);
 }
