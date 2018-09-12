@@ -10,19 +10,18 @@ import processing.serial.*;
 Minim minim = new Minim(this);
 AudioPlayer player;
 FFT fft;
-
 Serial myPort;
 
 ArrayList<String> mp3s = new ArrayList<String>();
 
-int[] bigNums = new int[]{ 10, 100, 300, 600, 1200, 2400, 4800, 9600, 20000 };
-int[] smallNums = new int[]{10, 55, 100, 200, 300, 450, 600, 800, 1000, 1200, 1800, 2400, 3600, 4800, 6200, 9600, 20000 };
+int[] bigNums   = new int[]{10, 100, 300, 600, 1200, 2400, 4800, 9600, 20000 };
+int[] smallNums = new int[]{10, 55, 100, 200, 300, 450, 600, 900, 1200, 1800, 2400, 3600, 4800, 6200, 9600, 12000, 20000 };
 
-int temp = 0;
 int songNum = 0;
 String dragState = "none";
+String seconds;
 
-final static boolean ARDUINO = true;
+final static boolean ARDUINO = false;
 
 void setup() {
   size(1100, 600, P3D);

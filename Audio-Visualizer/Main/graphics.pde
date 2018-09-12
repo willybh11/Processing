@@ -10,7 +10,7 @@ public void drawStructure() {
   line(1045, 250, 1055, 250);
   stroke(0, 255, 0);
   line(318, 200, 318, 300);
-  line(100, 300, 649, 300);
+  line(100, 300, 1000, 300);
   line(649, 200, 649, 600);
   line(0, 200, 1100, 200);
   line(1000, 0, 1000, 600);
@@ -21,15 +21,20 @@ public void drawStructure() {
 }
 
 public void drawTime() {
-  fill(70);  
+  stroke(255);
+  int pos = int(map(player.position(),0,player.length(),650,1000));
+  println(pos);
+  line(pos,200,pos,300);
+  
+  fill(0,255,0);  
   textAlign(LEFT);
   textSize(70);
-  text(nf(player.position()/1000/60, 1, 0)+":"+nf((player.position()/1000)%60), 655, 270);
-  text("| " + nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0),815,270);
-  //textSize(80);
-  //text(nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 825, 400);
-  //textSize(35);
-  //text("out of", 825, 335);
+  seconds = nf((player.position()/1000)%60);
+  if (int(seconds) < 10) 
+    seconds = '0'+seconds;
+  text(nf(player.position()/1000/60, 1, 0)+":"+seconds, 655, 270);
+  fill(0,100,0);
+  text("| " + nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 815, 270);
 }
 
 public void drawSongs() {
@@ -63,8 +68,8 @@ public void drawEQ() {
   String output = "";
   fill(50, 110, 40);
   for (int i = 0; i < 8; i++) {
-    h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 600), 200);
-    output += str(int(map(h, 600, 200, -1, 8)));
+    h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 600), 300);
+    output += str(int(map(h, 600, 300, -1, 8)));
     rect(650+w*i, h, w, 600-h);
   }
 
