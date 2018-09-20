@@ -1,6 +1,14 @@
 
+public void drawPause() {
+   if (!player.isPlaying()) {
+    fill(70);
+    rect(280,200,30,100,50);
+    rect(330,200,30,100,50);
+  } 
+}
+
 public void drawStructure() {
-  stroke(0, 255, 0);
+  stroke(0,255,0);
   fill(0, 0);
 
   rect(1, 1, width-1, height-1); // main box
@@ -8,7 +16,7 @@ public void drawStructure() {
   rect(1, 1, 50, 399); // around levels
 
   line(600, 0, 600, 400); // divide eq/songs
-
+  
   rect(600, 350, 250, 50);
 }
 
@@ -30,6 +38,8 @@ public void drawTime() {
   text(nf(player.position()/1000/60, 1, 0)+":"+seconds, 620, 388);
   fill(0,255,0);
   text("| " + nf(player.length()/1000/60, 1, 0)+":"+nf((player.length()/1000)%60, 2, 0), 720, 388);
+  
+
 }
 
 public void drawEQ() {
@@ -39,6 +49,7 @@ public void drawEQ() {
   int h;
   String output = "";
   fill(0);
+  stroke(0,255,0);
   for (int i = 0; i < 8; i++) {
     h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 400), 0);
     output += str(int(map(h, 400, 0, -1, 8)));
@@ -46,7 +57,7 @@ public void drawEQ() {
   }
 
   w = 550/16.0;
-  fill(20, 160, 0);
+  fill(20, 160, 0);//fill(0,100,80);//
   noStroke();
   for (int i = 0; i < 16; i++) {
     h = getHeight(fft, smallNums[i], smallNums[i+1]);
@@ -81,7 +92,6 @@ public void drawLevel() {
       fill(255, 0, 0, 50);
     }
     rect(10, height-40 - (39*i), 30, 28);
-    // rect(60, height-40 - (39*i), 30, 28);
   }
 
   int num_L = round(player.left .level() * 10 * 1.2);
@@ -95,7 +105,8 @@ public void drawLevel() {
     } else {
       fill(255, 0, 0);
     }
-    rect(10, height-40 - (39*i), 12, 28);
+    rect(10,height-40 - (39*i),6,28);
+    rect(10, height-40 - (39*i), 12, 28,10);
   }
 
   for (int i = 0; i < num_R; i++) {
@@ -106,7 +117,8 @@ public void drawLevel() {
     } else {
       fill(255, 0, 0);
     }
-    rect(28, height-40 - (39*i), 12, 28);
+    rect(34,height-40-(39*i),6,28);
+    rect(28, height-40 - (39*i), 12, 28,10);
   }
   stroke(0, 255, 0);
 }

@@ -12,6 +12,8 @@ AudioPlayer player;
 FFT fft;
 Serial myPort;
 
+Green colorPack = new Green();
+
 ArrayList<String> mp3s = new ArrayList<String>();
 
 int[] bigNums   = new int[]{10, 100, 300, 600, 1200, 2400, 4800, 9600, 20000 };
@@ -53,6 +55,7 @@ void draw() {
   drawEQ();
   drawSongs();
   drawTime();
+  drawPause();
   
   //println(mouseX,mouseY);
 }
