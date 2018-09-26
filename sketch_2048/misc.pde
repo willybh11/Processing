@@ -14,3 +14,13 @@ public boolean move(int curIndex, int nextIndex) {
   }
   return false;
 }
+
+public void add2() {
+  while (true) {
+    int n = int(random(0, 16));
+    if (nums[n] == 0) {
+      nums[n] = 2;
+      break;
+    }
+  }
+}
