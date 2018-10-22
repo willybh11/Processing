@@ -12,7 +12,6 @@ AudioPlayer player;
 FFT fft;
 Serial myPort;
 
-Green colorPack = new Green();
 
 ArrayList<String> mp3s = new ArrayList<String>();
 
@@ -22,13 +21,18 @@ int[] smallNums = new int[]{10, 55, 100, 200, 300, 450, 600, 900, 1200, 1800, 24
 int songNum = 0;
 String dragState = "none";
 String seconds;
+String input = "";
+
+boolean listening = false;
 
 final static boolean ARDUINO = false;
+
+green_black colorPack = new green_black();
 
 void setup() {
   size(850, 400, P3D);
 
-  //set up serial port to send data through
+  //set up serial port
   if (ARDUINO)
     myPort = new Serial(this, Serial.list()[0], 9600);
 

@@ -1,27 +1,33 @@
 
-public class Green {
-  color Stroke = color(0, 255, 0);
-  color Text = color(0, 255, 0);
-  color altText = color(50, 150, 250);
-  color Wave = color(255);
-  color eq = color(20, 160, 0);
-}
-class Levels extends Green {
+public class green_black {
 
-  color Low = color(70, 255, 100);
-  color Mid = color(255, 255, 70);
-  color High= color(255, 0, 0);
-}
-class Bg extends Levels {
-  color Low = color(70, 255, 100, 50);
-  color Mid = color(255, 255, 70, 50);
-  color High= color(255, 0, 0, 50);
+  color bg = color(0);
+  color waveform = color(255);
+  color stroke = color(0, 255, 0);
+  color alt = color(50, 150, 250);
+
+  color levels = color(20, 160, 0);
+
+  color timeLine = color(255);
+  color timeFill = color(70);
+
+  color low = color(70, 255, 100);
+  color mid = color(255, 255, 70);
+  color high = color(255, 0, 0);
 }
 
-public class Red {
-  color Stroke = color(255, 0, 0);
-  color Text = color(255, 0, 0);
-  color altText = color(50, 150, 250);
-  color Wave = color(0);
-  color eq = color(200, 0, 0);
+public class red_white {
+  color bg = color(255);
+  color waveform = color(0);
+  color stroke = color(255,0,0);
+  color alt = color(50, 150, 250);
+
+  color levels = color(255, 50, 80);
+
+  color timeLine = color(0);
+  color timeFill = color(200);
+
+  color low = color(70, 255, 100);
+  color mid = color(255, 255, 70);
+  color high = color(255, 0, 0);
 }
