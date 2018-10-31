@@ -20,14 +20,65 @@ int[] smallNums = new int[]{10, 55, 100, 200, 300, 450, 600, 900, 1200, 1800, 24
 
 int songNum = 0;
 String dragState = "none";
-String seconds;
 String input = "";
 
 boolean listening = false;
 
 final static boolean ARDUINO = false;
 
-green_black colorPack = new green_black();
+ColorPack green_black = new ColorPack(
+  /*bg*/        color(0),
+  /*waveform*/  color(255),
+  /*stroke*/    color(0,255,0),
+  /*alt*/       color(50,150,250),
+  /*levels*/    color(20,160,0),
+  /*timeLine*/  color(255),
+  /*timeFill*/  color(70),
+  /*low*/       color(70,255,100),
+  /*mid*/       color(255,255,70),
+  /*high*/      color(255,0,0)
+);
+
+ColorPack red_white = new ColorPack(
+  /*bg*/        color(255),
+  /*waveform*/  color(0),
+  /*stroke*/    color(255,0,0),
+  /*alt*/       color(50,150,250),
+  /*levels*/    color(255,50,80),
+  /*timeLine*/  color(0),
+  /*timeFill*/  color(200),
+  /*low*/       color(255,50,80),//color(70,255,100),
+  /*mid*/       color(200,50,250),//color(255,255,70),
+  /*high*/      color(80,50,250)//color(255,0,0)
+);
+
+ColorPack gold_black = new ColorPack(
+  /*bg*/        color(0),
+  /*waveform*/  color(255),
+  /*stroke*/    color(250,250,50),
+  /*alt*/       color(150,50,255),
+  /*levels*/    color(150,50,255),
+  /*timeLine*/  color(255),
+  /*timeFill*/  color(70),
+  /*low*/       color(255,255,70),
+  /*mid*/       color(255,150,50),
+  /*high*/      color(255,0,0)
+);
+
+ColorPack purple_black = new ColorPack(
+  /*bg*/        color(0),
+  /*waveform*/  color(255),
+  /*stroke*/    color(255,255,255),
+  /*alt*/       color(150,50,255),
+  /*levels*/    color(150,50,255),
+  /*timeLine*/  color(255),
+  /*timeFill*/  color(70),
+  /*low*/       color(165,0,255),
+  /*mid*/       color(200,100,255),
+  /*high*/      color(220,200,255)
+);
+
+ColorPack colorPack = purple_black;
 
 void setup() {
   size(850, 400, P3D);
@@ -60,6 +111,6 @@ void draw() {
   drawSongs();
   drawTime();
   drawPause();
-  
+
   //println(mouseX,mouseY);
 }

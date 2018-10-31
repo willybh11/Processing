@@ -32,7 +32,7 @@ public void drawTime() {
   fill(colorPack.alt);  
   textAlign(LEFT);
   textSize(40);
-  seconds = nf((player.position()/1000)%60);
+  String seconds = nf((player.position()/1000)%60);
   if (int(seconds) < 10) 
     seconds = '0'+seconds;
   text(nf(player.position()/1000/60, 1, 0)+":"+seconds, 620, 388);
@@ -83,11 +83,11 @@ public void drawLevel() {
 
   for (int i = 0; i < 10; i++) {
     if (i < 5) {
-      fill(colorPack.low,50);
+      fill(colorPack.low,70);
     } else if (i < 9) {
-      fill(colorPack.mid,50);
+      fill(colorPack.mid,70);
     } else {
-      fill(colorPack.high,50);
+      fill(colorPack.high,70);
     }
     rect(10, height-40 - (39*i), 30, 28);
   }

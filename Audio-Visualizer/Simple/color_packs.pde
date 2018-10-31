@@ -1,33 +1,28 @@
 
-public class green_black {
+public class ColorPack {
+  color bg;
+  color waveform;
+  color stroke;
+  color alt;
+  color levels;
+  color timeLine;
+  color timeFill;
+  color low;
+  color mid;
+  color high;
 
-  color bg = color(0);
-  color waveform = color(255);
-  color stroke = color(0, 255, 0);
-  color alt = color(50, 150, 250);
-
-  color levels = color(20, 160, 0);
-
-  color timeLine = color(255);
-  color timeFill = color(70);
-
-  color low = color(70, 255, 100);
-  color mid = color(255, 255, 70);
-  color high = color(255, 0, 0);
-}
-
-public class red_white {
-  color bg = color(255);
-  color waveform = color(0);
-  color stroke = color(255,0,0);
-  color alt = color(50, 150, 250);
-
-  color levels = color(255, 50, 80);
-
-  color timeLine = color(0);
-  color timeFill = color(200);
-
-  color low = color(70, 255, 100);
-  color mid = color(255, 255, 70);
-  color high = color(255, 0, 0);
+  public ColorPack( color nbg, color nwaveform, color nstroke, color nalt, 
+    color nlevels, color ntimeLine, color ntimeFill, 
+    color nlow, color nmid, color nhigh) {
+      bg = nbg;
+      waveform = nwaveform;
+      stroke = nstroke;
+      alt = nalt;
+      levels = nlevels;
+      timeLine = ntimeLine;
+      timeFill = ntimeFill;
+      low = nlow;
+      mid = nmid;
+      high = nhigh;
+  }
 }
