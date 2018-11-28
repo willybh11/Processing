@@ -78,6 +78,19 @@ ColorPack purple_black = new ColorPack(
   /*high*/      color(220,200,255)
 );
 
+ColorPack blue_black = new ColorPack(
+  /*bg*/        color(0),
+  /*waveform*/  color(255),
+  /*stroke*/    color(255,255,255),
+  /*alt*/       color(150,50,255),
+  /*levels*/    color(100,255,250),
+  /*timeLine*/  color(255),
+  /*timeFill*/  color(70),
+  /*low*/       color(165,0,255),
+  /*mid*/       color(200,100,255),
+  /*high*/      color(220,200,255)
+);
+
 ColorPack colorPack = purple_black;
 
 void setup() {
