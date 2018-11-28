@@ -1,5 +1,5 @@
 
-int size = 50;
+int size;
 int offset;
 
 void setup() {
@@ -19,14 +19,10 @@ void draw() {
     offset = 25;
   }
 
-  //size = frameCount%60 + 5;
+  size = frameCount%60 + 5;
 
   for (int x = 0; x < 9; x++) {
     for (int y = 0; y < 9; y++) {
-
-      size = (frameCount+x+y)%60 + 5;
-
-
       ellipse(x*50+offset, y*50+offset, size, size);
     }
   }
