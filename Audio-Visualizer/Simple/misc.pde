@@ -8,11 +8,13 @@ public int getHeight(FFT fft, int min, int max) {
   return(n);
 }
 
-public int diff(int a, int b) {
-  if (a > b)
-    return a-b;
-  if (b > a)
-    return b-a;
-  else
-    return 0;
+public void getSongs() {
+  mp3s = new ArrayList<String>();
+  for (String f : new File(dataPath(albums.get(albumNum))).list()) {
+    if (f.endsWith(".mp3"))
+      mp3s.add(split(f, ".mp3")[0]);
+    println(albums.get(albumNum)+f);
+  }
+  player = minim.loadFile(albums.get(albumNum)+'/'+mp3s.get(songNum)+".mp3");
+  fft = new FFT(player.bufferSize(), player.sampleRate());
 }

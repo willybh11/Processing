@@ -1,4 +1,4 @@
-Player p1 = new Player();
+Player p1 = new Player(); // my best is lvl 5
 HBS HealthBlocks = new HBS();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 PVector deathLocation = new PVector(mouseX, mouseY);

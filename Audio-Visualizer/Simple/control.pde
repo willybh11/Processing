@@ -15,7 +15,7 @@ public void rewind() {
     } else {
       songNum--;
     }
-    player = minim.loadFile(mp3s.get(songNum)+".mp3");
+    player = minim.loadFile(albums.get(albumNum)+'/'+mp3s.get(songNum)+".mp3");
     fft = new FFT(player.bufferSize(), player.sampleRate());
   } else {
     player.rewind();
@@ -30,6 +30,6 @@ public void fastForward() {
   } else {
     songNum++;
   }
-  player = minim.loadFile(mp3s.get(songNum)+".mp3");
+  player = minim.loadFile(albums.get(albumNum)+'/'+mp3s.get(songNum)+".mp3");
   fft = new FFT(player.bufferSize(), player.sampleRate());
 }
