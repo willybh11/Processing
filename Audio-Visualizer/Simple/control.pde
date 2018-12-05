@@ -1,9 +1,12 @@
 
 public void playPause() {
+  started = true;
   if (player.isPlaying()) {
     player.pause();
+    paused = true;
   } else {
     player.play();
+    paused = false;
   }
 }
 

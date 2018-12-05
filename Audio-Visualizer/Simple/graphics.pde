@@ -6,15 +6,19 @@ public void drawPause() {
     rect(330, 200, 30, 100, 50);
   }
 }
-
+   
 public void drawAlbums() {
   textAlign(LEFT);
   textSize(30);
   fill(colorPack.alt);
-  for (int i = 0; i < albums.size(); i++) {
+  int min = 0;
+  int max = 11;
+  for (int i = min; i < max; i++) {
     if (i == albumNum) fill(colorPack.alt);
     else fill(colorPack.stroke);
-    text(albums.get(i), 610, 40*(i+1));
+    if (i < albums.size()) {
+      text(albums.get(i), 610, 35+30*(i));
+    }
   }
 }
 
@@ -144,7 +148,7 @@ public void drawSongs() {
     if (i - songNum <= 10) {
       text(i+1+": "+mp3s.get(i), 610, 35+30*abs(songNum - i));
     }
-    if (songNum > mp3s.size()-11 && i == mp3s.size()-1) {
+    if (songNum > mp3s.size()-11 && i >= mp3s.size()-1) {
       text("-------------------------------", 605, 35+30*abs(songNum-i-1));
     }
   }

@@ -23,6 +23,8 @@ int albumNum = 0;
 String path;
 
 boolean inAlbum = false;
+boolean paused = false;
+boolean started = false;
 boolean ARDUINO = false;
 
 ColorPack colorPack = new ColorPack(
@@ -74,4 +76,10 @@ void draw() {
   else  drawAlbums();
   drawTime();
   drawPause();
+
+  if (!player.isPlaying() && !paused && started) {
+    started = false;
+    fastForward();
+    playPause();
+  }
 }

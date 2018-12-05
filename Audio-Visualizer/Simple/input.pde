@@ -14,14 +14,16 @@ void keyPressed() {
       else albumNum--;
       break;
     }
-  } else {
-    if (key == ' ') {
-      if (inAlbum) playPause();
-      else {
-        inAlbum = true;
-        getSongs();
-        println("got songs");
-      }
+  } 
+  if (key == ' ' || keyCode == ENTER) {
+    if (inAlbum) playPause();
+    else {
+      inAlbum = true;
+      getSongs();
+      println("got songs");
     }
+  } else if (key == '/') {
+   inAlbum = false; 
+   songNum = 0;
   }
 }
