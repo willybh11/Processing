@@ -142,18 +142,11 @@ public void drawSongs() {
   textSize(20); 
   fill(stroke);
 
-  for (int i = songNum+1; i < mp3s.size(); i++) {
-    if (i - songNum <= 10) {
+  for (int i = songNum+1; i <= mp3s.size(); i++) {
+    if (i - songNum <= 10 && i < mp3s.size()) {
       text(i+1+": "+mp3s.get(i), 610, 35+30*abs(songNum - i));
-    }                  println(songNum-i-1);
-
-
-    if (songNum > mp3s.size()-11 || songNum == mp3s.size()-1) {
-      //println("here",songNum);
-
-      if (i >= mp3s.size()-1 || songNum == mp3s.size()-1) {
-        text("-------------------------------", 605, 35+30*abs(songNum-i-1));
-      }
+    } else if (i == mp3s.size() && songNum > mp3s.size()-11) {
+      text("-------------------------------", 605, 35+30*abs(songNum-i));
     }
   }
 }

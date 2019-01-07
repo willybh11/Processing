@@ -45,7 +45,7 @@ void setup() {
   for (String f : new File(dataPath("")).list()) {
     if (f.endsWith(".mp3"))
       mp3s.add(split(f, ".mp3")[0]);
-    if (!f.endsWith(".vlw") && !f.endsWith(".mp3"))
+    else if (!f.endsWith(".vlw"))
       albums.add(f);
   }
   java.util.Collections.sort(mp3s);

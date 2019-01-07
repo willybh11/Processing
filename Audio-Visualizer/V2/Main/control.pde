@@ -40,6 +40,7 @@ public void rewind() {
 }
 
 public void fastForward() {
+  oldPlayer.pause();
   player.pause();
   if (songNum == mp3s.size()-1) {
     songNum = 0;
