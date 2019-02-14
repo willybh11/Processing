@@ -1,5 +1,5 @@
 
-final static int speed = 2; // seconds per loop
+final static int speed = 4; // seconds per loop
 
 void setup() {
   size(400, 400);
