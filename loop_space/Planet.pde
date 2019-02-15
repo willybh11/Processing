@@ -17,7 +17,7 @@ public class Planet {
     Color = newColor;
     orbitDiameter = 2*radius;
 
-    step = (2*PI) / (DPR * 60) * (365. / 10);
+    step = (2*PI) / (DPR * 60) * (365. / 7); // 1 year : 7 seconds
     theta = 0;
     origin = new PVector(0,0);
   }
