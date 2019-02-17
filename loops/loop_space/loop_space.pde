@@ -60,7 +60,7 @@ void draw() {
   rect(0,0,300,20,10);
   popMatrix();
   
-  // Uranus' rings
+  // Uranus' ring
   pushMatrix();
   pos = planets.get(6).pointOnCircle();
   translate(pos.x,pos.y);
