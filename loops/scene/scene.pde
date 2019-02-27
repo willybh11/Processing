@@ -3,7 +3,7 @@ Wave wave = new Wave(250,400,3,10,240);
 PVector[] starPositions = new PVector[50];
 float alpha = 255;
 int twinkleIndex = 0;
-boolean dimming = True;
+String status = "pickNew";
 
 void setup() {
     size(640,640);
@@ -16,28 +16,27 @@ void setup() {
 void draw() {
     background(0,25,80);
 
-    if (twinkleIndex == 0) {
-        twinkleIndex = (int)random(50);
-    }
-
-    dimming = alpha > 0;
-
-    if (dimming) {
-        alpha -= 20;
-    } else {
-        if (alpha >= 255) {
-            twinkleIndex = 0;
-        } else {
-            alpha += 20;
-        }
+    switch(status) {
+        case "dimming":
+            alpha -= 15;
+            if (alpha == 0) 
+                status = "brightening";
+            break;
+        case "brightening":
+            alpha += 15;
+            if (alpha == 255)
+                status = "pickNew";
+            break;
+        case "pickNew":
+            twinkleIndex = (int)random(50);
+            status = "dimming";
+            break;
     }
 
     for (int i = 0; i < 50; i++) { // draw stars
-        if (i == twinkleIndex) {
+        fill(255);
+        if (i == twinkleIndex)
             fill(255,alpha);
-        } else {
-            fill(255);
-        }
         ellipse(starPositions[i].x,starPositions[i].y,2,2);
     }
 
@@ -54,11 +53,10 @@ void draw() {
 
     for (float i = 0; i < 20; i++) {        // lightbeam --> R
         float alpha = map(i*i,0,400,50,0);
-        float x = 70 + i*i;
         float radius = 10 + 5*i;
         alpha -= abs(map(frameCount % 480,0,480,-60,60)) - 10;
         fill(255,255,200,alpha);
-        ellipse(x,65,radius,radius);
+        ellipse(70 + i*i,65,radius,radius);
     }
 
     // saveFrame("frames/frame" + frameCount % 480 + ".png");
