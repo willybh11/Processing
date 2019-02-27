@@ -1,9 +1,13 @@
 
-Wave wave = new Wave(0,400,1.5,10);
+Wave wave = new Wave(250,400,3,10,240);
 PVector[] starPositions = new PVector[50];
+float alpha = 255;
+int twinkleIndex = 0;
+boolean dimming = True;
 
 void setup() {
     size(640,640);
+    noStroke();
     for (int i = 0; i < 50; i++) {
         starPositions[i] = new PVector(random(640),random(450));
     }
@@ -12,46 +16,63 @@ void setup() {
 void draw() {
     background(0,25,80);
 
-    fill(255);
-    for (PVector pos : starPositions) { // stars
-        ellipse(pos.x,pos.y,2,2);
+    if (twinkleIndex == 0) {
+        twinkleIndex = (int)random(50);
     }
 
-    fill(100); // cliff face
+    dimming = alpha > 0;
+
+    if (dimming) {
+        alpha -= 20;
+    } else {
+        if (alpha >= 255) {
+            twinkleIndex = 0;
+        } else {
+            alpha += 20;
+        }
+    }
+
+    for (int i = 0; i < 50; i++) { // draw stars
+        if (i == twinkleIndex) {
+            fill(255,alpha);
+        } else {
+            fill(255);
+        }
+        ellipse(starPositions[i].x,starPositions[i].y,2,2);
+    }
+
+    fill(100); // crag
     triangle(0,height,0,300,130,300);
 
     fill(230);  // moon
     ellipse(590,50,50,50);
-
     fill(200); // crater
     ellipse(585,53,18,18);
 
     drawLightHouse();
     wave.Update();
 
-    float x;
-    for (float i = 0; i < 20; i++) {        // light
+    for (float i = 0; i < 20; i++) {        // lightbeam --> R
         float alpha = map(i*i,0,400,50,0);
-        if (abs(map(frameCount % 480,0,480,-50,50)) > 10) {
-            alpha -= abs(map(frameCount % 480,0,480,-50,50)) - 10;
-        }
-        if (frameCount % 960 < 480) {
-            x = 70 + i*i;
-        } else {
-            x = 70 - i*i;
-        }
-        float radius = 10+5*i;
+        float x = 70 + i*i;
+        float radius = 10 + 5*i;
+        alpha -= abs(map(frameCount % 480,0,480,-60,60)) - 10;
         fill(255,255,200,alpha);
         ellipse(x,65,radius,radius);
     }
+
+    // saveFrame("frames/frame" + frameCount % 480 + ".png");
+    // print("frame ");
+    // print(frameCount % 480);
+    // println(" saved");
 }
 
 void drawLightHouse() {
     for (int i = 0; i < 4; i++) { // red/white part
         if (i%2 == 0) {
-            fill(255,0,0);
+            fill(200,0,0);
         } else {
-            fill(255);
+            fill(200);
         }
         beginShape();
         int bottom = 300-50*i;
@@ -83,4 +104,8 @@ void drawLightHouse() {
     fill(80);           // roof
     rect(30,35,70,10);
     triangle(35,35,95,35,65,20);
+}
+
+void twinkleStar() {
+    
 }
