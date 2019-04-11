@@ -1,3 +1,4 @@
+
 color[] grid = new color[10000]; // list of finished grid colors
 IntList indices = new IntList(); // range of 10k, will be randomized
 int hue = round(random(0, 100)); // spiice things up a bit
@@ -17,12 +18,12 @@ void setup() {
 
 void draw() {
   if (sortGrid() != 0) {             // sortGrid both sorts the grid once and returns the number of pixels moved
-    for (int i = 0; i < 10; i++) {   //change this value to change the speed of the sort
+    for (int i = 0; i < 5; i++) {   //change this value to change the speed of the sort
       sortGrid();
     }
   }
   drawGrid();
-  //cycleColors();s
+  //cycleColors();
 }
 
 void cycleColors() {
