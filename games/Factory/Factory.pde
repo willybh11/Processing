@@ -1,26 +1,58 @@
 
-BuildingObject[][] grid = new BuildingObject[15][15];
+import java.util.*;
 
-int[] inventory = {0,0};
-String[] itemNames = {"Iron Ore", "Iron Bar"};
+EntityObject[][] grid = new EntityObject[15][15];
+
+Button[] buildingButtons = new Button[12];
+
+Dictionary buildings = new Hashtable();
+
+int[] 		inventory = {3,10};
+String[] 	itemNames = {"Iron Ore", "Iron Bar"};
+String[] 	buildingNames = {"Smelter","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty"};
+int[][] 	buildingCosts = {
+	{0,5},	// smelter
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+	{0,0},
+};
+
+String itemInHands = "Empty";
 
 void setup() {
 
-	size(1400,1000);
+	size(1450,1000);
 	noCursor();
 	textAlign(CENTER);
 
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 15; j++) {
-			addBuildingObject("Empty",i,j);
+			grid[i][j] = new Empty(i,j,"rowcol");
 		}
 	}
 
-	addBuildingObject("Iron Ore Patch",1,1);
-	addBuildingObject("Iron Ore Patch",1,2);
-	addBuildingObject("Iron Ore Patch",2,1);
-	addBuildingObject("Iron Ore Patch",3,1);
-	addBuildingObject("Iron Ore Patch",2,2);
+	for (int row = 0; row < 4; row++) {
+		for (int col = 0; col < 3; col++) {
+			buildingButtons[3*row + col] = new Button(25 + 175*col,35 + 175*row,buildingNames[3*row + col]);
+		}
+	}
+
+	addObjectToGrid("Iron Ore Patch",1,1,"rowcol");
+	addObjectToGrid("Iron Ore Patch",2,1,"rowcol");
+	addObjectToGrid("Iron Ore Patch",1,2,"rowcol");
+	addObjectToGrid("Iron Ore Patch",2,2,"rowcol");
+	addObjectToGrid("Iron Ore Patch",3,1,"rowcol");
+	addObjectToGrid("Smelter",4,4,"rowcol");
+
+	grid[4][4].inputItem("Iron Ore");
 }
 
 void draw() {
@@ -29,22 +61,7 @@ void draw() {
 	drawGrid();
 	drawBuildMenu();
 	drawInventory();
+	drawHands();
 
 	drawMouse();
-}
-
-void addBuildingObject(String title, int row, int col) {
-
-	int rgb = 0;
-
-	switch(title) {
-		case "Empty":
-		rgb = color(255);
-		break;
-		case "Iron Ore Patch":
-		rgb = color(120,150,170);
-		break;
-	}
-
-	grid[row][col] = new BuildingObject(title,row,col,rgb);
 }

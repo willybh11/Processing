@@ -1,5 +1,5 @@
 
-public void drawGrid() {
+void drawGrid() {
 
 	pushMatrix();
 	translate(50,50);
@@ -9,34 +9,67 @@ public void drawGrid() {
 	for (int row = 0; row < 15; row++) {
 		for (int col = 0; col < 15; col++) {
 
-			BuildingObject square = grid[row][col];
+			EntityObject square = grid[row][col];
 
-			fill(square.rgb);
-			rect(col*50,row*50,50,50);
+			square.drawMe();
+			square.update();
 		}
 	}
 
 	popMatrix();
 }
 
-public void drawBuildMenu() {
+void drawBuildMenu() {
 
 	pushMatrix();
+
 	translate(850,50);
 	fill(255);
-	rect(0,0,500,750);
+	rect(0,0,550,750);
+
+	for (Button button : buildingButtons) {
+		button.drawMe();
+	}
+
 	popMatrix();
 }
 
-public void drawInventory() {
+void drawHands() {
+
+	pushMatrix();
+	translate(50,850);
+	strokeWeight(1);
+	stroke(150);
+
+	fill(255);
+	rect(0,0,100,100);
+
+	EntityObject model = new Empty(12345,54321,"xy");
+
+	switch(itemInHands) {
+		case "Iron Ore":
+		model = new IronOre(50,50,"xy");
+		break;
+		case "Iron Bar":
+		model = new IronBar(50,50,"xy");
+		break;
+		case "Smelter":
+		model = new Smelter(50,50,"xy");
+		break;
+	}
+
+	model.drawMe();
+
+	popMatrix();
+}
+
+void drawInventory() {
 
 	pushMatrix();
 
-	translate(50,850);
+	translate(200,850);
 	fill(255);
-	rect(0,0,1300,100);
-
-	fill(0);
+	rect(0,0,1200,100);
 
 	for (int i = 0; i < inventory.length; i++) {
 		fill(0);
@@ -49,20 +82,24 @@ public void drawInventory() {
 		strokeWeight(1);
 		line(100*(i+1),0,100*(i+1),100);
 
+		EntityObject model = new Empty(12345,54321,"xy");
+
 		switch(itemNames[i]) {
 			case "Iron Ore":
-			drawIronOre(50 + 100*i,75);
+			model = new IronOre(50 + 100*i,75,"xy");
 			break;
 			case "Iron Bar":
-			drawIronBar(50 + 100*i,75);
+			model = new IronBar(50 + 100*i,75,"xy");
 			break;
 		}
+
+		model.drawMe();
 	}
 
 	popMatrix();
 }
 
-public void drawMouse() {
+void drawMouse() {
 	if (mouseX < 800 && mouseX > 50 && mouseY < 800 && mouseY > 50) {
 		int col = mouseY / 50;
 		int row = mouseX / 50;
