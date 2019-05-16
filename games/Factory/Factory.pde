@@ -9,10 +9,10 @@ Dictionary buildings = new Hashtable();
 
 int[] 		inventory = {3,10};
 String[] 	itemNames = {"Iron Ore", "Iron Bar"};
-String[] 	buildingNames = {"Smelter","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty"};
+String[] 	buildingNames = {"Smelter","Drill","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty"};
 int[][] 	buildingCosts = {
 	{0,5},	// smelter
-	{0,0},
+	{0,10},
 	{0,0},
 	{0,0},
 	{0,0},
@@ -52,7 +52,9 @@ void setup() {
 	addObjectToGrid("Iron Ore Patch",3,1,"rowcol");
 	addObjectToGrid("Smelter",4,4,"rowcol");
 
-	grid[4][4].inputItem("Iron Ore");
+	addObjectToGrid("Drill",2,2,"rowcol");
+
+	// grid[4][4].inputItem("Iron Ore");
 }
 
 void draw() {

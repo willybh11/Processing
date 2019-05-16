@@ -9,10 +9,8 @@ void drawGrid() {
 	for (int row = 0; row < 15; row++) {
 		for (int col = 0; col < 15; col++) {
 
-			EntityObject square = grid[row][col];
-
-			square.drawMe();
-			square.update();
+			grid[row][col].drawMe();
+			if (entityType(grid[row][col].id) == "Hopper") grid[row][col].update();
 		}
 	}
 

@@ -18,6 +18,9 @@ class Button {
 			model = new Smelter(x+75,y+75,"xy");
 			println("smelter assigned");
 			break;
+			case "Drill":
+			model = new Drill(x+75,y+75,"xy","Empty");
+			break;
 			case "Empty":
 			model = new Empty(x+75,y+75,"xy");
 			break;
@@ -38,8 +41,7 @@ class Button {
 		textSize(30);
 		text(id,x+75,y+30);
 
-		if (model.id != "Empty")
-			model.drawMe();
+		model.drawMe();
 
 		int[] costs = buildingCosts[index];
 		int materials = 0;
@@ -49,7 +51,7 @@ class Button {
 
 				EntityObject model = new Empty(123456789,987654321,"xy");
 				switch(itemNames[i]) {
-					case "Iron Bar":;
+					case "Iron Bar":
 					model = new IronBar(x+25*(materials+1),y+110,"xy");
 					break;
 				}

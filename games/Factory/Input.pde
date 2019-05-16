@@ -14,17 +14,23 @@ void mouseClicked() {
 		int row = mouseY / 50 - 1;
 
 		String handType = entityType(itemInHands);
-		String gridType = grid[row][col].type;
+		String gridType = entityType(grid[row][col].id);
+
+		println("handtype:",handType);
+		println("gridType:",gridType);
 
 		if ( (handType == gridType || handType == "Universal" || gridType == "Universal") && gridType != "Environmental" ) { // swap
 
 			String temp = itemInHands;
 			itemInHands = grid[row][col].id;
 			addObjectToGrid(temp,row,col,"rowcol");
+			if (entityType(itemInHands) == "Static")
+				itemInHands = "Empty";
 
 		}
 
-		if (handType == "Item" && gridType == "Building") {
+		println(handType,gridType,row,col,grid[row][col].id);
+		if (handType == "Item" && gridType == "Hopper") {
 			if (!grid[row][col].active) {
 				grid[row][col].inputItem(itemInHands);
 				itemInHands = "Empty";

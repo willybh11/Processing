@@ -2,7 +2,7 @@
 void deconstruct(String id) {
 
 
-	if (entityType(id) == "Building") {
+	if (entityType(id) == "Hopper") {
 
 		int index = indexOf(id,buildingNames);
 
@@ -18,7 +18,8 @@ String entityType(String id) {
 		case "Iron Ore":
 		case "Iron Bar":		return "Item";
 		case "Iron Ore Patch":	return "Static";
-		case "Smelter":			return "Building";
+		case "Drill":
+		case "Smelter":			return "Hopper";
 	}
 	return "Universal";
 }
@@ -40,6 +41,10 @@ void addObjectToGrid(String id, int a, int b, String coordType) {
 		break;
 		case "Iron Ore Patch":
 		grid[a][b] = new IronOrePatch(a,b,coordType);
+		break;
+		case "Drill":
+		String oldID = grid[a][b].id;
+		grid[a][b] = new Drill(a,b,coordType,oldID);
 		break;
 	}
 }
