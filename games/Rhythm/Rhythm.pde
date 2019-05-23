@@ -2,10 +2,13 @@
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import java.io.File;
+import processing.serial.*;
 
 Minim minim = new Minim(this);
 AudioPlayer player;
 FFT fft;
+
+Serial myPort;
 
 ArrayList<Hit> hits = new ArrayList<Hit>();
 ArrayList<Explosion> circles = new ArrayList<Explosion>();
@@ -15,14 +18,18 @@ int score;
 float lastIncrease;
 float scoreSize;
 int opacity;
+color bgColor;
+int resetTime;
 
-final int systemStart = (int)System.currentTimeMillis();
+int systemStart = (int)System.currentTimeMillis();
 
 final boolean left = true;
 final boolean right = false;
 
+boolean midStroke = false;
+
 int millis() {
-	return - systemStart + (int)System.currentTimeMillis() ;
+	return (int)System.currentTimeMillis() - systemStart;
 }
 
 void setup() {
@@ -31,8 +38,13 @@ void setup() {
 	textAlign(CENTER);
 	ellipseMode(CENTER);
 
+	myPort = new Serial(this, Serial.list()[4], 9600);
+
 	scoreSize = 30;
 	opacity = 0;
+	lastIncrease = -200;
+	//systemStart = 0;
+	bgColor = color(255);
 
 	for (String f : new File(dataPath("")).list()) {
 		if (f.endsWith(".mp3"))
@@ -46,11 +58,53 @@ void setup() {
 }
 
 void draw() {
-	background(255);
+
+	takeSerialInput();
+
+	background(bgColor);
+
+	setGradient(0,height - 150,width,100,0,255,1);
+	setGradient(0,height - 250,width,100,255,0,1);
 
 	drawHits();
 	drawCircles();
 	drawUI();
+}
+
+void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
+
+  noFill();
+
+  if (axis == 1) {  // Top to bottom gradient
+    for (int i = y; i <= y+h; i++) {
+      float inter = map(i, y, y+h, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(x, i, x+w, i);
+    }
+  }  
+  else if (axis == 2) {  // Left to right gradient
+    for (int i = x; i <= x+w; i++) {
+      float inter = map(i, x, x+w, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y+h);
+    }
+  }
+
+  noStroke();
+}
+
+void reset() {
+	player.rewind();
+	score = 0;
+	lastIncrease = 0;
+
+	for (Hit hit : hits) {
+		hit.reset();
+	}
+
+	systemStart = (int)System.currentTimeMillis();
 }
 
 void drawCircles() {
@@ -73,12 +127,25 @@ void drawUI() {
 	fill(0,opacity);
 	text(score,width/2,50);
 
-	rect(0, height-150, width, 10); // line
+	rectMode(CENTER);
+	// rect(width/2, height-150, width, 200); // line
+
+	scoreSize = map(millis() - lastIncrease,0,200,70,90);
+
+	float tempOpacity = map(millis() - lastIncrease,0,200,50,0);
+
+	textSize(scoreSize);
+	fill(0,tempOpacity);	
+	text(score,width/2,70);
+
+
 }
 
 void countdown() {
-	if (frameCount == 180)
+	if (frameCount == 180) {
 		player.play();
+		reset();
+	}
 	else {
 		opacity += 255 / 180;
 		textSize(250);

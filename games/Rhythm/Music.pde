@@ -42,8 +42,16 @@ public void luvuneedu() {
 		hits.add(new Hit(i + 31.25, 		right));
 		hits.add(new Hit(i + 32, 		left));
 		hits.add(new Hit(i + 32.75, 		left));
-		// hits.add(new Hit(i + 33.75, 		right));
+	}
 
+	for (float i = 82.0; i < 90; i++) {
+		hits.add(new Hit(i, right));
+		hits.add(new Hit(i + 0.5, left));
+	}
+
+	for (float i = 90.0; i < 94; i+=0.5) {
+		hits.add(new Hit(i, right));
+		hits.add(new Hit(i + 0.25, left));
 	}
 
 
