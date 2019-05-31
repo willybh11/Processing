@@ -23,7 +23,7 @@ public void luvuneedu(int start) {
 		hits.add(new Hit(i + 14.75,	right,start - 400));
 		hits.add(new Hit(i + 15.25,	right,start - 400));
 		hits.add(new Hit(i + 16,	left,start - 400));
-		hits.add(new Hit(i + 17,	left,start - 400));
+		hits.add(new Hit(i + 16.75,	left,start - 400));
 		if (i==64) break;
 		hits.add(new Hit(i + 17.75,	right,start - 400));
 		hits.add(new Hit(i + 18.25,	left,start - 400));
