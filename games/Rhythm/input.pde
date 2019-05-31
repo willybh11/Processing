@@ -1,18 +1,10 @@
 
 void keyPressed() {
-	print(round(((millis() - 3600) / 408.6)*4)/4.0);
+	// print(round(((millis() - 3600) / 408.6)*4)/4.0);
 
 	if (key == CODED) {
-		switch(keyCode) {
-			case LEFT:
-			strike(true);
-			println("\tleft");
-			break;
-			case RIGHT:
-			strike(false);
-			println("\tright");
-			break;
-		}
+		if (keyCode == LEFT)	strike(true);
+		if (keyCode == RIGHT)	strike(false);
 	} else {
 		switch(key) {
 			case 'r':
@@ -38,29 +30,21 @@ void takeSerialInput() {
 				try {
 					n = Integer.parseInt(trimmed);
 				} catch (NumberFormatException e) {
-					println(e);
+					println("CAUGHT TWO NUMBERS");
 				}
 			}
 		}
 
-		println(n);
-
-		if (n > 30 && !midStroke) {
-			midStroke = true;
-			strike(false);
-		} else if (n < -30 && !midStroke){
-			midStroke = true;
-			strike(true);
-		} else if (midStroke && abs(n)<20){
-			midStroke = false;
-		}
-
-        // if (n > 30)       strike(false);  //right
-        // else if (n < -30) strike(true);   // left
-}
+		if (n == 327 && !midStroke)				strike(true);
+		else if (n == -327 && !midStroke)		strike(false);
+		else if (midStroke && abs(n) != 327)	midStroke = false;
+	}
 }
 
 void strike(boolean dir) {
+
+	midStroke = true;
+
 	for (Hit i : hits) {
 		if (  (dir == i.dir) && (millis() > i.time - 100) && (millis() < i.time + 100) ) {
 			i.setStruckness(true);

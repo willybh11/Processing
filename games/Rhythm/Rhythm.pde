@@ -12,14 +12,14 @@ Serial myPort;
 
 ArrayList<Hit> hits = new ArrayList<Hit>();
 ArrayList<Explosion> circles = new ArrayList<Explosion>();
-ArrayList<String> mp3s = new ArrayList<String>();
 
-int score;
-float lastIncrease;
-float scoreSize;
-int opacity;
-color bgColor;
-int resetTime;
+String mp3;
+
+int score 				= 0;
+float lastIncrease 		= -200;
+float scoreSize 		= 30;
+int opacity 			= 0;
+int whenToStartPlaying 	= 0; // in frames
 
 int systemStart = (int)System.currentTimeMillis();
 
@@ -40,59 +40,37 @@ void setup() {
 
 	myPort = new Serial(this, Serial.list()[4], 9600);
 
-	scoreSize = 30;
-	opacity = 0;
-	lastIncrease = -200;
-	//systemStart = 0;
-	bgColor = color(255);
+	for (String f : new File(dataPath("")).list())
+		if (f.endsWith(".mp3"))	mp3 = f;
 
-	for (String f : new File(dataPath("")).list()) {
-		if (f.endsWith(".mp3"))
-			mp3s.add(split(f, ".mp3")[0]);
-	}
-
-	player = minim.loadFile(mp3s.get(0)+".mp3");
+	player = minim.loadFile(mp3);
 	fft = new FFT(player.bufferSize(), player.sampleRate());
-
-	luvuneedu();
 }
 
 void draw() {
 
+	background(255);
 	takeSerialInput();
 
-	background(bgColor);
+	int timer = whenToStartPlaying - frameCount;
 
-	setGradient(0,height - 150,width,100,0,255,1);
-	setGradient(0,height - 250,width,100,255,0,1);
+	if (whenToStartPlaying == 0 && !player.isPlaying())	drawInstructions();
+	if (score == -25 && whenToStartPlaying == 0)		whenToStartPlaying = frameCount + 179;
+	if (timer <= 180 && timer >= 0)						countdown();
 
+	drawUI();
 	drawHits();
 	drawCircles();
-	drawUI();
+	
 }
 
-void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
+void drawInstructions() {
+	fill(0);
+	textSize(50);
+	text("INSTRUCTIONS WILL GO HERE\nFlick the controller",width/2,100);
+	text(5 - score/-5,width/2,250);
+	text("times to begin.",width/2,330);
 
-  noFill();
-
-  if (axis == 1) {  // Top to bottom gradient
-    for (int i = y; i <= y+h; i++) {
-      float inter = map(i, y, y+h, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(x, i, x+w, i);
-    }
-  }  
-  else if (axis == 2) {  // Left to right gradient
-    for (int i = x; i <= x+w; i++) {
-      float inter = map(i, x, x+w, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(i, y, i, y+h);
-    }
-  }
-
-  noStroke();
 }
 
 void reset() {
@@ -100,26 +78,23 @@ void reset() {
 	score = 0;
 	lastIncrease = 0;
 
-	for (Hit hit : hits) {
-		hit.reset();
-	}
-
 	systemStart = (int)System.currentTimeMillis();
+	hits = new ArrayList<Hit>();
+	circles = new ArrayList<Explosion>();
+
+	luvuneedu(millis());
 }
 
 void drawCircles() {
 	for (int i = 0; i < circles.size(); i++) {
-		if (circles.get(i).alpha <= 0) {
+		if (circles.get(i).alpha <= 0)
 			circles.remove(i);
-		} else
-		circles.get(i).drawMe();
+		else
+			circles.get(i).drawMe();
 	}
 }
 
 void drawUI() {
-
-	if (frameCount <= 180)
-		countdown();
 
 	scoreSize = 30 + max(0,map(millis() - lastIncrease,0,200,30,0));
 
@@ -127,8 +102,9 @@ void drawUI() {
 	fill(0,opacity);
 	text(score,width/2,50);
 
-	rectMode(CENTER);
-	// rect(width/2, height-150, width, 200); // line
+	rectMode(CORNER);
+	fill(200,opacity);
+	rect(0,height-250,width,200);
 
 	scoreSize = map(millis() - lastIncrease,0,200,70,90);
 
@@ -137,20 +113,21 @@ void drawUI() {
 	textSize(scoreSize);
 	fill(0,tempOpacity);	
 	text(score,width/2,70);
-
-
 }
 
 void countdown() {
-	if (frameCount == 180) {
+	score = 0;
+
+	if (frameCount == whenToStartPlaying) {
 		player.play();
+		luvuneedu(millis());
 		reset();
 	}
-	else {
+	else if (frameCount < whenToStartPlaying) {
 		opacity += 255 / 180;
 		textSize(250);
 		fill(0);
-		text( 3 - frameCount / 60, width/2, height-250);
+		text(1 + (whenToStartPlaying - frameCount) / 60, width/2, height-250);
 	}
 }
 
