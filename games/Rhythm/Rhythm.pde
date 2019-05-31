@@ -66,11 +66,19 @@ void draw() {
 
 void drawInstructions() {
 	fill(0);
-	textSize(50);
-	text("INSTRUCTIONS WILL GO HERE\nFlick the controller",width/2,100);
-	text(5 - score/-5,width/2,250);
-	text("times to begin.",width/2,330);
+	textSize(55);
+	text("Will and Leo's Rhythm Game",width/2,70);
+	textSize(30);
+	text("Hit each dot as it passes through the grey box!\nHits are detected by SPEED, not position.\nThat is speed of ROTATION along the Z axis.\nSmall, quick flicks are the most effective!\nRemember to Leave space to flick in either\ndirection up to 3 or 4 times.\nPress 'r' to reset the song, or 'q' to quit!",width/2,165);
 
+	rect(50,105,700,5);
+	rect(50,480,700,5);
+
+	String text = "Flick the controller " + str(5 - score/-5);
+	if (5 - score/-5 > 1)	text += " more times to begin.";
+	else 					text += " more time to begin.";
+
+	text(text,width/2,550);
 }
 
 void reset() {
