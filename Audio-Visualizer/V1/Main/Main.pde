@@ -24,7 +24,7 @@ String seconds;
 final static boolean ARDUINO = false;
 
 void setup() {
-  size(1100, 600, P3D);
+  size(1100, 600);//, P3D);
 
   //set up serial port to send data through
   if (ARDUINO)

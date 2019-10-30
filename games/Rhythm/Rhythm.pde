@@ -69,7 +69,7 @@ void drawInstructions() {
 	textSize(55);
 	text("Will and Leo's Rhythm Game",width/2,70);
 	textSize(30);
-	text("Hit each dot as it passes through the grey box!\nHits are detected by SPEED, not position.\nThat is speed of ROTATION along the Z axis.\nSmall, quick flicks are the most effective!\nRemember to Leave space to flick in either\ndirection up to 3 or 4 times.\nPress 'r' to reset the song, or 'q' to quit!",width/2,165);
+	text("Hit each dot as it passes through the grey box!\nHits are detected by SPEED, not position.\nThat is speed of ROTATION along the Y axis.\nSmall, quick flicks are the most effective!\nRemember to Leave space to flick in either\ndirection up to 3 or 4 times.\nPress 'r' to reset the song, or 'q' to quit!",width/2,165);
 
 	rect(50,105,700,5);
 	rect(50,480,700,5);

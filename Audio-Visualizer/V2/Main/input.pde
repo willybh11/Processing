@@ -20,5 +20,7 @@ void keyPressed() {
   } else if (key == '/') {
     inAlbum = false; 
     songNum = 0;
+  } else if (key == 'q') {
+  	exit();
   }
 }

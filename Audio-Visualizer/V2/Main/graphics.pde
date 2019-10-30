@@ -38,7 +38,7 @@ public void drawTime() {
   line(pos, 350, pos, 400);
 
   fill(timeFill);
-  noStroke();
+  // noStroke();
   rect(600, 350, pos-600, 50);
 
   fill(alt);  
@@ -55,27 +55,25 @@ public void drawTime() {
 public void drawEQ() {
   fft.forward(player.mix);
 
-  float w = 550/8.0;
-  int h;
-  String output = "";
   fill(bg);
   stroke(stroke);
+
+  float w = 550/8.0;
+
   for (int i = 0; i < 8; i++) {
-    h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 400), 0);
-    output += str(int(map(h, 400, 0, -1, 8)));
+    int h = max(min(getHeight(fft, bigNums[i], bigNums[i+1])-50, 400), 0);
     rect(51+w*i, h, w-1, 400-h);
   }
 
   w = 550/16.0;
+
   fill(levels);
   noStroke();
+
   for (int i = 0; i < 16; i++) {
-    h = getHeight(fft, smallNums[i], smallNums[i+1]);
+    int h = getHeight(fft, smallNums[i], smallNums[i+1]);
     rect(51+w*i, h, w-1, 400-h);
   }
-
-  if (ARDUINO)
-    myPort.write(output);
 }
 
 public void drawWaveform() {
@@ -87,17 +85,15 @@ public void drawWaveform() {
     line( x1, 150 + player.right.get(i)*50, x2, 150 + player.right.get(i+1)*50 );
   }
 }
+
 public void drawLevel() {
 
   noStroke();
 
   for (int i = 0; i < 10; i++) {
-    if (i < 5)
-      fill(low, 70);
-    else if (i < 9)
-      fill(mid, 70);
-    else
-      fill(high, 70);
+    if (i < 5)		fill(low, 70);
+    else if (i < 9)	fill(mid, 70);
+    else 			fill(high, 70);
 
     rect(10, height-40 - (39*i), 30, 28);
   }
@@ -106,24 +102,18 @@ public void drawLevel() {
   int num_R = round(player.right.level() * 10 * 1.2);
 
   for (int i = 0; i < num_L; i++) {
-    if (i < 5)
-      fill(low);
-    else if (i < 9)
-      fill(mid);
-    else
-      fill(high);
+    if (i < 5)		fill(low);
+    else if (i < 9)	fill(mid);
+    else 			fill(high);
 
     rect(10, height-40 - (39*i), 6, 28);
     rect(10, height-40 - (39*i), 12, 28, 10);
   }
 
   for (int i = 0; i < num_R; i++) {
-    if (i < 5)
-      fill(low);
-    else if (i < 9)
-      fill(mid);
-    else
-      fill(high);
+    if (i < 5)		fill(low);
+    else if (i < 9)	fill(mid);
+    else 			fill(high);
 
     rect(34, height-40-(39*i), 6, 28);
     rect(28, height-40 - (39*i), 12, 28, 10);
@@ -143,10 +133,9 @@ public void drawSongs() {
   fill(stroke);
 
   for (int i = songNum+1; i <= mp3s.size(); i++) {
-    if (i - songNum <= 10 && i < mp3s.size()) {
+    if (i - songNum <= 10 && i < mp3s.size())
       text(i+1+": "+mp3s.get(i), 610, 35+30*abs(songNum - i));
-    } else if (i == mp3s.size() && songNum > mp3s.size()-11) {
+    else if (i == mp3s.size() && songNum > mp3s.size()-11)
       text("-------------------------------", 605, 35+30*abs(songNum-i));
-    }
   }
 }

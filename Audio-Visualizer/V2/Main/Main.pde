@@ -8,7 +8,6 @@ Minim minim = new Minim(this);
 AudioPlayer player;
 AudioPlayer oldPlayer;
 FFT fft; 
-Serial myPort;
 
 ArrayList<String> mp3s = new ArrayList<String>();
 ArrayList<String> albums = new ArrayList<String>();
@@ -21,7 +20,6 @@ int albumNum = 0;
 String path;
 
 boolean inAlbum = false;
-boolean ARDUINO = false;
 
 color bg = color(0);
 color waveform = color(255);
@@ -35,18 +33,12 @@ color mid = color(200, 100, 255);
 color high = color(220, 200, 255);
 
 void setup() {
-  size(850, 400, P3D);
-
-  //set up serial port
-  if (ARDUINO)
-    myPort = new Serial(this, Serial.list()[0], 9600);
+  size(850, 400);//, P3D);
 
   //turn local directory into list of mp3 names
   for (String f : new File(dataPath("")).list()) {
-    if (f.endsWith(".mp3"))
-      mp3s.add(split(f, ".mp3")[0]);
-    else if (!f.endsWith(".vlw"))
-      albums.add(f);
+    if (f.endsWith(".mp3"))			mp3s.add(split(f, ".mp3")[0]);
+    else if (!f.endsWith(".vlw"))	albums.add(f);
   }
   java.util.Collections.sort(mp3s);
   java.util.Collections.sort(albums);
@@ -66,8 +58,8 @@ void draw() {
   drawWaveform();
   drawLevel();
   drawEQ();
-  if (inAlbum) drawSongs();
-  else  drawAlbums();
+  if (inAlbum) 	drawSongs();
+  else  		drawAlbums();
   drawTime();
   drawPause();
   autoPlay();
