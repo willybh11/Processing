@@ -16,19 +16,20 @@ void setup() {
 
 void draw() {
 
-  frame = frameCount % 600; // ten second loop
+  frame = frameCount % 1200; // ten second loop
   translate(width/2, height/2);
   background(255);
 
   if (frame > 120) { // white circle tightens
     int subframe = frame - 120;
     float offset = max(0,pow(1.03,-(subframe-240)));
+    float miniOffset = 25*sin(map(frame % 180,0,180,0,2*PI));
 
     background(0);
     fill(236, 0, 140);
     ellipse(0, 0, width+offset, height+offset);
     fill(159, 31, 99);
-    ellipse(0, 0, 1200+offset, 1200+offset);
+    ellipse(0, 0, 1200+offset+miniOffset, 1200+offset+miniOffset);
     fill(255);
     ellipse(0, 0, 1000+offset, 1000+offset);
   }
