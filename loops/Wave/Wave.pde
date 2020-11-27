@@ -3,7 +3,7 @@ ArrayList<Point> points = new ArrayList<Point>();
 Point priority;
 int current = 0;
 
-float dispersal = 3.5; //.5 min | 1.5 & 3.5 look good
+float dispersal = 1; //.5 min | 1.5 & 3.5 look good
 
 void setup() {
   size(640, 640);

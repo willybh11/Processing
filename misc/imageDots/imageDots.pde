@@ -5,7 +5,7 @@ color cp;
 int sampleRate = 20;
 
 void setup() {
-	myImage = loadImage("bg_werewolf.jpg");
+	myImage = loadImage("bg_red.jpg");
 	w = myImage.width;
 	h = myImage.height;
 	size(1920,1080);

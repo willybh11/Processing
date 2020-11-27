@@ -89,7 +89,7 @@ public void drawEQ() {
 public void drawButtons() {
   fill(1); //play/pause button
   noStroke();
-  rect(175, 200, 75, 100);
+  rect(175, 201, 75, 99);
   stroke(0, 255, 0);
   if (player.isPlaying()) {    
     rect(185, 220, 20, 60);
@@ -100,21 +100,21 @@ public void drawButtons() {
 
   fill(2); //rewind
   noStroke();
-  rect(100, 200, 75, 100);
+  rect(101, 201, 74, 99);
   stroke(0, 255, 0);
   triangle(120, 250, 140, 220, 140, 280);
   triangle(140, 250, 160, 220, 160, 280);
 
   fill(3); //ff
   noStroke();
-  rect(250, 200, 68, 100);
+  rect(250, 201, 68, 99);
   stroke(0, 255, 0);
   triangle(280, 250, 260, 220, 260, 280);
   triangle(300, 250, 280, 220, 280, 280);
 
   fill(4); //mute
   noStroke();
-  rect(315, 200, 75, 100);
+  rect(315, 201, 75, 99);
   stroke(0, 255, 0);
   line(340, 235, 360, 235);
   line(340, 265, 360, 265);
