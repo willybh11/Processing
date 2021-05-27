@@ -33,7 +33,8 @@ color mid = color(200, 100, 255);
 color high = color(220, 200, 255);
 
 void setup() {
-  size(850, 400);//, P3D);
+  size(850, 400);//, P3D)
+  surface.setAlwaysOnTop(true);
 
   //turn local directory into list of mp3 names
   for (String f : new File(dataPath("")).list()) {

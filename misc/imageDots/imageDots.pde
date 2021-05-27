@@ -2,7 +2,7 @@
 PImage myImage;
 int w,h;
 color cp;
-int sampleRate = 20;
+int sampleRate = 400;
 
 void setup() {
 	myImage = loadImage("bg_red.jpg");
@@ -14,7 +14,7 @@ void setup() {
 }
 
 void draw() {
-	myImage = loadImage("bg_werewolf.jpg");
+	myImage = loadImage("bg_red.jpg");
 	showPixels();
 }
 

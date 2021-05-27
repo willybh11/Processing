@@ -27,7 +27,7 @@ void draw() {
 }
 
 void cycleColors() {
-  hue = (hue + 1) % 100;                 //add 1 value to the hue
+  hue = (hue + 1) % 100;                 // add 1 value to the hue
   for (int i = 0; i < 100; i++) {
     for (int j = 0; j < 100; j++) {
       grid[100*i+j] = color(hue, j, i);  // put all new colors in a list
